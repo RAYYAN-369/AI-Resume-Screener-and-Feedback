@@ -65,6 +65,7 @@ AI-Resume-Screener-and-Feedback/
 │── backend/
 │── frontend/
 │── docs/
+│── ai/
 │── .gitignore
 │── LICENSE
 │── README.md

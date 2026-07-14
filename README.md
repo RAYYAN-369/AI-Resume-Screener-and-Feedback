@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # AI-Resume-Screener-and-Feedback
 
 ## 📌 Overview
@@ -81,4 +81,4 @@ AI-Resume-Screener-and-Feedback/
 This project is developed for educational purposes as part of the **AI & Generative AI Fellowship**.
 =======
 # AI-Resume-Screener-and-Feedback
->>>>>>> 9d84ef15b3695de85baf9a944f8db7793ac57429
+

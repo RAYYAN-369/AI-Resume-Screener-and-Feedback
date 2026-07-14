@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Resume Scanner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../static/css/styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      AI Resume Scanner
+    </a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+      <span id="themeLabel">Light</span>
+      <span class="track"><span class="knob"></span></span>
+    </button>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <p class="eyebrow">Resume ↔ job description match</p>
+    <h1>See exactly where your resume matches the job — and where it doesn't.</h1>
+    <p class="lede">
+      Upload a resume and a job description. The scanner reads both, checks the
+      requirements against evidence in your resume, and returns a score with
+      matched requirements, gaps, and honest suggestions — not an automatic
+      hiring decision.
+    </p>
+
+    <div class="actions-row">
+      <a href="upload.html" class="btn btn-primary">
+        <span class="btn-label">Start a scan</span>
+      </a>
+    </div>
+
+    <div class="panel-grid" style="margin-top: 48px;">
+      <div class="panel">
+        <h2><span class="step-index">01</span> Upload</h2>
+        <p style="color: var(--ink-soft); margin: 10px 0 0;">
+          Add your resume and the job description — paste text or upload a PDF/TXT file.
+        </p>
+      </div>
+      <div class="panel">
+        <h2><span class="step-index">02</span> Review</h2>
+        <p style="color: var(--ink-soft); margin: 10px 0 0;">
+          Get a match score, evidenced requirements, gaps, and suggestions to strengthen your resume.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">AI / GenAI Fellowship Program — Resume Scanner</div>
+</footer>
+
+<script src="../static/js/theme.js"></script>
+</body>
+</html>

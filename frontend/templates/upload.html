@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Upload — AI Resume Scanner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../static/css/styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      AI Resume Scanner
+    </a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+      <span id="themeLabel">Light</span>
+      <span class="track"><span class="knob"></span></span>
+    </button>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero" style="padding-top: 48px;">
+    <p class="eyebrow">Step 1 of 2</p>
+    <h1 style="font-size: clamp(1.7rem, 3vw, 2.3rem);">Add your resume and the job description</h1>
+
+    <form id="scanForm" novalidate>
+      <div class="panel-grid">
+
+        <div class="panel">
+          <h2><span class="step-index">01</span> Resume</h2>
+          <div class="dropzone" id="resumeDropzone" tabindex="0" role="button" aria-label="Upload resume file">
+            <p><strong>Drop your resume here</strong></p>
+            <p class="hint">PDF or TXT · or click to browse</p>
+            <span class="file-chip" id="resumeChip">
+              <span id="resumeFileName">file.pdf</span>
+              <span aria-hidden="true">✕</span>
+            </span>
+            <input type="file" id="resumeFile" accept=".pdf,.txt" />
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2><span class="step-index">02</span> Job description</h2>
+          <div class="jd-tabs" role="tablist">
+            <button type="button" class="jd-tab active" id="jdTabPaste" role="tab" aria-selected="true">Paste text</button>
+            <button type="button" class="jd-tab" id="jdTabFile" role="tab" aria-selected="false">Upload file</button>
+          </div>
+
+          <textarea class="jd-input" id="jdText" placeholder="Paste the job description here…"></textarea>
+
+          <div class="jd-file-row" id="jdFileRow">
+            <div class="dropzone" id="jdDropzone" tabindex="0" role="button" aria-label="Upload job description file">
+              <p><strong>Drop the job description here</strong></p>
+              <p class="hint">PDF or TXT · or click to browse</p>
+              <span class="file-chip" id="jdChip">
+                <span id="jdFileName">jd.pdf</span>
+                <span aria-hidden="true">✕</span>
+              </span>
+              <input type="file" id="jdFile" accept=".pdf,.txt" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="form-error" id="formError" role="alert"></p>
+
+      <div class="actions-row">
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="btn-label">Analyze match</span>
+        </button>
+        <span class="hint" style="color: var(--ink-soft); font-size: 0.85rem;">
+          Files are used for this scan only — see the limitations note on the results page.
+        </span>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">AI / GenAI Fellowship Program — Resume Scanner</div>
+</footer>
+
+<script src="../static/js/theme.js"></script>
+<script src="../static/js/upload.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Results — AI Resume Scanner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../static/css/styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      AI Resume Scanner
+    </a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+      <span id="themeLabel">Light</span>
+      <span class="track"><span class="knob"></span></span>
+    </button>
+  </div>
+</header>
+
+<main class="container">
+  <p class="eyebrow" style="margin-top: 32px;">Scan result</p>
+
+  <section class="score-hero">
+    <div class="score-dial" id="scoreDial" style="--pct: 0;">
+      <span id="scoreValue">–</span>
+    </div>
+    <div class="score-copy">
+      <p class="eyebrow" id="scoreEyebrow">Match score</p>
+      <h2 style="margin:0;">How this resume lines up with the role</h2>
+      <p id="scoreRationale">Loading assessment…</p>
+    </div>
+  </section>
+
+  <div class="req-columns">
+    <div class="req-panel matched">
+      <h3><span class="dot"></span> Matched requirements</h3>
+      <ul class="req-list" id="matchedList"></ul>
+    </div>
+    <div class="req-panel missing">
+      <h3><span class="dot"></span> Missing requirements</h3>
+      <ul class="req-list" id="missingList"></ul>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <h3>Suggestions</h3>
+    <ul class="suggestion-list" id="suggestionList"></ul>
+  </div>
+
+  <div class="section-block">
+    <h3>Limitations</h3>
+    <ul class="limitation-list" id="limitationList"></ul>
+    <p class="disclaimer">
+      This is AI-assisted guidance, not a hiring decision. Scores can vary slightly
+      between runs since the underlying model is probabilistic — weigh the evidence
+      and suggestions above more than the exact number.
+    </p>
+  </div>
+
+  <div class="actions-row">
+    <a href="upload.html" class="btn btn-ghost">Run another scan</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">AI / GenAI Fellowship Program — Resume Scanner</div>
+</footer>
+
+<script src="../static/js/theme.js"></script>
+<script src="../static/js/results.js"></script>
+</body>
+</html>

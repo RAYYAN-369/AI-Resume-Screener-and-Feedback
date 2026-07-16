@@ -3,8 +3,10 @@ from pathlib import Path
 from uuid import uuid4
 import shutil
 
-from app.utils.file_validator import allowed_file
 from app.config import UPLOAD_FOLDER
+from app.utils.file_validator import allowed_file
+from app.services.extractor import extract_pdf_text, extract_docx_text
+from app.services.gemini_service import analyze_resume
 
 router = APIRouter()
 
@@ -27,21 +29,31 @@ async def upload_resume(file: UploadFile = File(...)):
         )
 
     unique_filename = f"{uuid4().hex}_{file.filename}"
-
     file_path = Path(UPLOAD_FOLDER) / unique_filename
 
     try:
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
+        extension = file.filename.rsplit(".", 1)[1].lower()
+
+        if extension == "pdf":
+            extracted_text = extract_pdf_text(file_path)
+        else:
+            extracted_text = extract_docx_text(file_path)
+
+        ai_feedback = analyze_resume(extracted_text)
+
         return {
             "success": True,
             "message": "Resume uploaded successfully.",
-            "filename": unique_filename
+            "filename": unique_filename,
+            "extracted_text": extracted_text,
+            "ai_feedback": ai_feedback
         }
 
-    except Exception:
+    except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail="Failed to upload resume."
+            detail=str(e)
         )

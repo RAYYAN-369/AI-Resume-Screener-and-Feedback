@@ -1,4 +1,5 @@
-// theme.js — light/dark mode toggle, persisted across visits.
+// theme.js — light/dark mode toggle. Dark is the default look; the app
+// only switches to light when the user explicitly picks it.
 
 (function () {
   const STORAGE_KEY = "resume-scanner-theme";
@@ -7,21 +8,21 @@
   const label = document.getElementById("themeLabel");
 
   function applyTheme(theme) {
-    if (theme === "dark") {
+    if (theme === "light") {
+      root.setAttribute("data-theme", "light");
+      if (label) label.textContent = "Light";
+      if (toggle) toggle.setAttribute("aria-pressed", "false");
+    } else {
       root.setAttribute("data-theme", "dark");
       if (label) label.textContent = "Dark";
       if (toggle) toggle.setAttribute("aria-pressed", "true");
-    } else {
-      root.removeAttribute("data-theme");
-      if (label) label.textContent = "Light";
-      if (toggle) toggle.setAttribute("aria-pressed", "false");
     }
   }
 
   function getPreferredTheme() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === "dark" || saved === "light") return saved;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return "dark"; // dark is the default brand look
   }
 
   // Apply immediately on load to avoid a flash of the wrong theme.
@@ -29,17 +30,10 @@
 
   if (toggle) {
     toggle.addEventListener("click", function () {
-      const isDark = root.getAttribute("data-theme") === "dark";
-      const next = isDark ? "light" : "dark";
+      const isLight = root.getAttribute("data-theme") === "light";
+      const next = isLight ? "dark" : "light";
       applyTheme(next);
       localStorage.setItem(STORAGE_KEY, next);
     });
   }
-
-  // Follow system changes only if the user hasn't chosen manually.
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
-    if (!localStorage.getItem(STORAGE_KEY)) {
-      applyTheme(e.matches ? "dark" : "light");
-    }
-  });
 })();

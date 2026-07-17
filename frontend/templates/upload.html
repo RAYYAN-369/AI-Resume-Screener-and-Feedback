@@ -16,77 +16,165 @@
       <span class="brand-mark" aria-hidden="true"></span>
       AI Resume Scanner
     </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#features">Features</a>
+      <a href="#" title="Add your docs link here">Docs</a>
+      <a href="#" title="Add your GitHub repo link here">GitHub</a>
+      <a href="index.html#about">About</a>
+    </nav>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
-      <span id="themeLabel">Light</span>
+      <span id="themeLabel">Dark</span>
       <span class="track"><span class="knob"></span></span>
     </button>
   </div>
 </header>
 
+<section class="hero" style="padding: 34px 0 26px;">
+  <div class="hero-inner container" style="grid-template-columns: 1fr;">
+    <div>
+      <p class="eyebrow">Step 1 of 2</p>
+      <h1 style="font-size: clamp(1.6rem, 3vw, 2.2rem); max-width: 100%;">Add your resume and the job description</h1>
+    </div>
+  </div>
+</section>
+
 <main class="container">
 
-  <section class="hero" style="padding-top: 48px;">
-    <p class="eyebrow">Step 1 of 2</p>
-    <h1 style="font-size: clamp(1.7rem, 3vw, 2.3rem);">Add your resume and the job description</h1>
+  <form id="scanForm" novalidate>
+    <div class="panel-grid">
 
-    <form id="scanForm" novalidate>
-      <div class="panel-grid">
+      <div class="panel">
+        <h2><span class="step-index">01</span> Resume</h2>
+        <div class="dropzone pulse" id="resumeDropzone" tabindex="0" role="button" aria-label="Upload resume file">
+          <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M12 16V4M12 4l-4 4M12 4l4 4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p><strong>Drop your resume here</strong></p>
+          <p class="hint">or click to browse</p>
+          <span class="file-chip" id="resumeChip">
+            <svg class="check-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 10.5l4 4 8-9" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span id="resumeFileName">file.pdf</span>
+            <span aria-hidden="true" style="margin-left:4px; cursor:pointer;">✕</span>
+          </span>
+          <input type="file" id="resumeFile" accept=".pdf,.txt" />
+        </div>
+        <p class="format-note"><span>Formats: PDF, TXT</span><span>Max size: 8MB</span></p>
 
-        <div class="panel">
-          <h2><span class="step-index">01</span> Resume</h2>
-          <div class="dropzone" id="resumeDropzone" tabindex="0" role="button" aria-label="Upload resume file">
-            <p><strong>Drop your resume here</strong></p>
-            <p class="hint">PDF or TXT · or click to browse</p>
-            <span class="file-chip" id="resumeChip">
-              <span id="resumeFileName">file.pdf</span>
-              <span aria-hidden="true">✕</span>
+        <div class="progress-wrap" id="resumeProgressWrap">
+          <div class="progress-track"><div class="progress-fill" id="resumeProgressFill"></div></div>
+          <div class="progress-pct" id="resumeProgressPct">Uploading… 0%</div>
+        </div>
+
+        <div class="file-preview" id="resumePreview">
+          <span class="fp-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="2" width="12" height="16" rx="1.5"/><path d="M7 6h6M7 9h6M7 12h3" stroke-linecap="round"/></svg></span>
+          <div>
+            <div class="fp-name" id="resumePreviewName">resume.pdf</div>
+            <div class="fp-meta" id="resumePreviewMeta">PDF · 240 KB</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2><span class="step-index">02</span> Job description</h2>
+        <div class="jd-tabs" role="tablist">
+          <button type="button" class="jd-tab active" id="jdTabPaste" role="tab" aria-selected="true">Paste text</button>
+          <button type="button" class="jd-tab" id="jdTabFile" role="tab" aria-selected="false">Upload file</button>
+        </div>
+
+        <div class="jd-input-wrap">
+          <textarea class="jd-input" id="jdText" maxlength="6000" placeholder="Example:&#10;&#10;Senior Frontend Developer&#10;We're looking for a frontend developer with 3+ years of experience in JavaScript, HTML, and CSS. Experience with responsive design, REST APIs, and Git required. TypeScript and accessibility experience a plus."></textarea>
+          <span class="char-count" id="charCount">0 / 6000</span>
+        </div>
+
+        <div class="jd-file-row" id="jdFileRow">
+          <div class="dropzone pulse" id="jdDropzone" tabindex="0" role="button" aria-label="Upload job description file">
+            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M12 16V4M12 4l-4 4M12 4l4 4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <p><strong>Drop the job description here</strong></p>
+            <p class="hint">or click to browse</p>
+            <span class="file-chip" id="jdChip">
+              <svg class="check-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 10.5l4 4 8-9" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span id="jdFileName">jd.pdf</span>
+              <span aria-hidden="true" style="margin-left:4px; cursor:pointer;">✕</span>
             </span>
-            <input type="file" id="resumeFile" accept=".pdf,.txt" />
+            <input type="file" id="jdFile" accept=".pdf,.txt" />
           </div>
+          <p class="format-note"><span>Formats: PDF, TXT</span><span>Max size: 8MB</span></p>
         </div>
-
-        <div class="panel">
-          <h2><span class="step-index">02</span> Job description</h2>
-          <div class="jd-tabs" role="tablist">
-            <button type="button" class="jd-tab active" id="jdTabPaste" role="tab" aria-selected="true">Paste text</button>
-            <button type="button" class="jd-tab" id="jdTabFile" role="tab" aria-selected="false">Upload file</button>
-          </div>
-
-          <textarea class="jd-input" id="jdText" placeholder="Paste the job description here…"></textarea>
-
-          <div class="jd-file-row" id="jdFileRow">
-            <div class="dropzone" id="jdDropzone" tabindex="0" role="button" aria-label="Upload job description file">
-              <p><strong>Drop the job description here</strong></p>
-              <p class="hint">PDF or TXT · or click to browse</p>
-              <span class="file-chip" id="jdChip">
-                <span id="jdFileName">jd.pdf</span>
-                <span aria-hidden="true">✕</span>
-              </span>
-              <input type="file" id="jdFile" accept=".pdf,.txt" />
-            </div>
-          </div>
-        </div>
-
       </div>
 
-      <p class="form-error" id="formError" role="alert"></p>
+    </div>
 
-      <div class="actions-row">
-        <button type="submit" class="btn btn-primary" id="submitBtn">
-          <span class="spinner" aria-hidden="true"></span>
-          <span class="btn-label">Analyze match</span>
-        </button>
-        <span class="hint" style="color: var(--ink-soft); font-size: 0.85rem;">
-          Files are used for this scan only — see the limitations note on the results page.
-        </span>
-      </div>
-    </form>
-  </section>
+    <p class="form-error" id="formError" role="alert"></p>
+
+    <div class="actions-row">
+      <button type="submit" class="btn btn-primary" id="submitBtn">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="btn-label">Analyze match</span>
+      </button>
+      <span class="hint" style="color: var(--ink-soft); font-size: 0.85rem;">
+        Files are used for this scan only — see the limitations note on the results page.
+      </span>
+    </div>
+  </form>
 
 </main>
 
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-card">
+    <div class="loading-ring" aria-hidden="true"></div>
+    <p class="loading-message" id="loadingMessage">Reading resume…</p>
+    <ul class="loading-steps" id="loadingSteps">
+      <li data-step="0"><span class="ls-dot"></span> Reading resume</li>
+      <li data-step="1"><span class="ls-dot"></span> Extracting skills</li>
+      <li data-step="2"><span class="ls-dot"></span> Matching requirements</li>
+      <li data-step="3"><span class="ls-dot"></span> Calculating ATS score</li>
+      <li data-step="4"><span class="ls-dot"></span> Generating AI feedback</li>
+    </ul>
+  </div>
+</div>
+
 <footer class="site-footer">
-  <div class="container">AI / GenAI Fellowship Program — Resume Scanner</div>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>AI Resume Scanner</h4>
+        <p>AI-assisted resume and job description matching, built for the AI / GenAI Fellowship Program.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="index.html#features">Features</a>
+        <a href="upload.html">Analyze resume</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#" title="Add your docs link here">Documentation</a>
+        <a href="#" title="Add your GitHub repo link here">GitHub</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html#about">About</a>
+        <a href="#" title="Add a contact method here">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#" title="Add a privacy policy page here">Privacy</a>
+        <a href="#" title="Add a terms page here">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AI Resume Scanner — v0.1.0 (MVP)</span>
+      <span>AI / GenAI Fellowship Program</span>
+    </div>
+  </div>
 </footer>
 
 <script src="../static/js/theme.js"></script>

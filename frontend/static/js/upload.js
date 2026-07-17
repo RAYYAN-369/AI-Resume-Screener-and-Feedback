@@ -4,19 +4,59 @@
   const ACCEPTED_TYPES = [".pdf", ".txt"];
   const MAX_SIZE_MB = 8;
 
-  function setupDropzone(dropzoneId, inputId, chipId, nameId) {
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+  }
+
+  function setupDropzone(dropzoneId, inputId, chipId, nameId, opts) {
     const dropzone = document.getElementById(dropzoneId);
     const input = document.getElementById(inputId);
     const chip = document.getElementById(chipId);
     const nameEl = document.getElementById(nameId);
     if (!dropzone || !input) return null;
 
+    const progressWrap = opts && opts.progressWrapId ? document.getElementById(opts.progressWrapId) : null;
+    const progressFill = opts && opts.progressFillId ? document.getElementById(opts.progressFillId) : null;
+    const progressPct = opts && opts.progressPctId ? document.getElementById(opts.progressPctId) : null;
+    const preview = opts && opts.previewId ? document.getElementById(opts.previewId) : null;
+    const previewName = opts && opts.previewNameId ? document.getElementById(opts.previewNameId) : null;
+    const previewMeta = opts && opts.previewMetaId ? document.getElementById(opts.previewMetaId) : null;
+
     let selectedFile = null;
+
+    function simulateUpload(file) {
+      if (!progressWrap || !progressFill || !progressPct) return;
+      progressWrap.classList.add("visible");
+      progressFill.style.width = "0%";
+      let pct = 0;
+      const timer = setInterval(() => {
+        pct += Math.random() * 25 + 10;
+        if (pct >= 100) {
+          pct = 100;
+          clearInterval(timer);
+          setTimeout(() => progressWrap.classList.remove("visible"), 500);
+        }
+        progressFill.style.width = pct + "%";
+        progressPct.textContent = "Uploading… " + Math.round(pct) + "%";
+      }, 180);
+    }
 
     function showFile(file) {
       selectedFile = file;
       nameEl.textContent = file.name;
       dropzone.classList.add("has-file");
+      dropzone.classList.remove("pulse");
+
+      if (preview && previewName && previewMeta) {
+        previewName.textContent = file.name;
+        const ext = file.name.split(".").pop().toUpperCase();
+        previewMeta.textContent = ext + " · " + formatSize(file.size);
+        preview.classList.add("visible");
+      }
+
+      simulateUpload(file);
     }
 
     function clearFile(e) {
@@ -24,6 +64,9 @@
       selectedFile = null;
       input.value = "";
       dropzone.classList.remove("has-file");
+      dropzone.classList.add("pulse");
+      if (preview) preview.classList.remove("visible");
+      if (progressWrap) progressWrap.classList.remove("visible");
     }
 
     dropzone.addEventListener("click", (e) => {
@@ -64,12 +107,17 @@
       if (file) showFile(file);
     });
 
-    return {
-      getFile: () => selectedFile,
-    };
+    return { getFile: () => selectedFile };
   }
 
-  const resumeZone = setupDropzone("resumeDropzone", "resumeFile", "resumeChip", "resumeFileName");
+  const resumeZone = setupDropzone("resumeDropzone", "resumeFile", "resumeChip", "resumeFileName", {
+    progressWrapId: "resumeProgressWrap",
+    progressFillId: "resumeProgressFill",
+    progressPctId: "resumeProgressPct",
+    previewId: "resumePreview",
+    previewNameId: "resumePreviewName",
+    previewMetaId: "resumePreviewMeta",
+  });
   const jdZone = setupDropzone("jdDropzone", "jdFile", "jdChip", "jdFileName");
 
   // JD input mode: paste text vs upload file
@@ -77,6 +125,8 @@
   const jdTabFile = document.getElementById("jdTabFile");
   const jdText = document.getElementById("jdText");
   const jdFileRow = document.getElementById("jdFileRow");
+  const jdInputWrap = jdText.closest(".jd-input-wrap");
+  const charCount = document.getElementById("charCount");
 
   function setJdMode(mode) {
     const isPaste = mode === "paste";
@@ -84,12 +134,20 @@
     jdTabFile.classList.toggle("active", !isPaste);
     jdTabPaste.setAttribute("aria-selected", String(isPaste));
     jdTabFile.setAttribute("aria-selected", String(!isPaste));
-    jdText.style.display = isPaste ? "block" : "none";
+    jdInputWrap.style.display = isPaste ? "block" : "none";
     jdFileRow.classList.toggle("visible", !isPaste);
   }
 
   jdTabPaste.addEventListener("click", () => setJdMode("paste"));
   jdTabFile.addEventListener("click", () => setJdMode("file"));
+
+  // Live character count
+  function updateCharCount() {
+    const max = jdText.getAttribute("maxlength") || 6000;
+    charCount.textContent = jdText.value.length + " / " + max;
+  }
+  jdText.addEventListener("input", updateCharCount);
+  updateCharCount();
 
   function fileIsValid(file) {
     if (!file) return false;
@@ -99,9 +157,35 @@
     return true;
   }
 
+  // Button ripple effect
+  document.querySelectorAll(".btn").forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      const rect = btn.getBoundingClientRect();
+      const ripple = document.createElement("span");
+      const size = Math.max(rect.width, rect.height);
+      ripple.className = "ripple";
+      ripple.style.width = ripple.style.height = size + "px";
+      ripple.style.left = (e.clientX - rect.left - size / 2) + "px";
+      ripple.style.top = (e.clientY - rect.top - size / 2) + "px";
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+
   const form = document.getElementById("scanForm");
   const submitBtn = document.getElementById("submitBtn");
   const errorEl = document.getElementById("formError");
+  const overlay = document.getElementById("loadingOverlay");
+  const loadingMessageEl = document.getElementById("loadingMessage");
+  const stepEls = Array.from(document.querySelectorAll("#loadingSteps li"));
+
+  const LOADING_STEPS = [
+    "Reading resume…",
+    "Extracting skills…",
+    "Matching requirements…",
+    "Calculating ATS score…",
+    "Generating AI feedback…",
+  ];
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -137,9 +221,30 @@
     runScan(resumeFile, jdIsFileMode ? jdFile : jdTextValue, jdIsFileMode);
   });
 
+  function runStepChecklist() {
+    let i = 0;
+    stepEls.forEach((el) => el.classList.remove("active", "done"));
+
+    function advance() {
+      if (i > 0) stepEls[i - 1].classList.remove("active");
+      if (i > 0) stepEls[i - 1].classList.add("done");
+      if (i < stepEls.length) {
+        stepEls[i].classList.add("active");
+        loadingMessageEl.textContent = LOADING_STEPS[i];
+        i++;
+        setTimeout(advance, 620);
+      } else {
+        loadingMessageEl.textContent = "Done";
+      }
+    }
+    advance();
+  }
+
   function runScan(resumeFile, jd, jdIsFile) {
     submitBtn.disabled = true;
     submitBtn.classList.add("loading");
+    overlay.classList.add("visible");
+    runStepChecklist();
 
     // ------------------------------------------------------------------
     // TODO(backend integration): replace this mock with a real call to
@@ -160,8 +265,11 @@
     setTimeout(() => {
       const mockAssessment = {
         match_score: 76,
+        ats_score: 82,
         score_rationale:
           "Strong overlap on core technical skills and years of experience; a few specific tools named in the job description aren't evidenced in the resume.",
+        ai_summary:
+          "This resume shows solid, evidenced experience in JavaScript, REST APIs, and Git that lines up well with the role. The main gaps are newer tools the job description calls out by name — TypeScript and CI/CD — which aren't mentioned anywhere in the resume text. Tightening a few vague bullet points and naming tools explicitly would likely raise both the match score and the ATS score.",
         matched_requirements: [
           {
             requirement: "3+ years building web applications with JavaScript",
@@ -181,6 +289,19 @@
           "Exposure to CI/CD pipelines (e.g. GitHub Actions)",
           "Experience with accessibility (WCAG) audits",
         ],
+        strengths: [
+          "Clear, quantifiable ownership of features in past roles.",
+          "Consistent use of version control and team workflows.",
+        ],
+        weaknesses: [
+          "No mention of testing or QA practices.",
+          "Bullet points are mostly duties, not outcomes.",
+        ],
+        grammar_issues: [
+          "Inconsistent verb tense between the two most recent roles (past vs. present).",
+          "\"Responsible for\" appears 4 times — vary the phrasing.",
+        ],
+        keyword_suggestions: ["TypeScript", "CI/CD", "GitHub Actions", "WCAG", "Unit testing"],
         suggestions: [
           "If you've used TypeScript even briefly, name it explicitly — the JD calls it out as a requirement.",
           "Mention any exposure to automated deployment or testing pipelines, even as a contributor rather than owner.",
@@ -194,7 +315,7 @@
 
       sessionStorage.setItem("resume-scan-result", JSON.stringify(mockAssessment));
       window.location.href = "result.html";
-    }, 900);
+    }, 3200);
   }
 
   setJdMode("paste");

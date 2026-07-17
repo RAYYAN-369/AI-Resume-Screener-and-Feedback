@@ -16,41 +16,89 @@
       <span class="brand-mark" aria-hidden="true"></span>
       AI Resume Scanner
     </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#features">Features</a>
+      <a href="#" title="Add your docs link here">Docs</a>
+      <a href="#" title="Add your GitHub repo link here">GitHub</a>
+      <a href="index.html#about">About</a>
+    </nav>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
-      <span id="themeLabel">Light</span>
+      <span id="themeLabel">Dark</span>
       <span class="track"><span class="knob"></span></span>
     </button>
   </div>
 </header>
 
 <main class="container">
-  <p class="eyebrow" style="margin-top: 32px;">Scan result</p>
+  <p class="eyebrow" style="margin-top: 24px;">Scan result</p>
 
   <section class="score-hero">
     <div class="score-dial" id="scoreDial" style="--pct: 0;">
       <span id="scoreValue">–</span>
     </div>
     <div class="score-copy">
-      <p class="eyebrow" id="scoreEyebrow">Match score</p>
+      <p class="eyebrow" id="scoreEyebrow">Overall match score</p>
       <h2 style="margin:0;">How this resume lines up with the role</h2>
       <p id="scoreRationale">Loading assessment…</p>
     </div>
   </section>
 
-  <div class="req-columns">
-    <div class="req-panel matched">
-      <h3><span class="dot"></span> Matched requirements</h3>
-      <ul class="req-list" id="matchedList"></ul>
+  <div class="mini-score-row">
+    <div class="mini-score">
+      <div class="ms-label">ATS score</div>
+      <div class="ms-value" id="atsScore">–</div>
     </div>
-    <div class="req-panel missing">
-      <h3><span class="dot"></span> Missing requirements</h3>
-      <ul class="req-list" id="missingList"></ul>
+    <div class="mini-score">
+      <div class="ms-label">Skills matched</div>
+      <div class="ms-value" id="skillsMatchedCount">–</div>
+    </div>
+    <div class="mini-score">
+      <div class="ms-label">Skills missing</div>
+      <div class="ms-value" id="skillsMissingCount">–</div>
     </div>
   </div>
 
   <div class="section-block">
-    <h3>Suggestions</h3>
-    <ul class="suggestion-list" id="suggestionList"></ul>
+    <h3>AI summary</h3>
+    <p class="ai-summary" id="aiSummary">–</p>
+  </div>
+
+  <div class="req-columns">
+    <div class="req-panel matched">
+      <h3><span class="badge badge-matched">✓ Matched</span></h3>
+      <ul class="req-list" id="matchedList"></ul>
+    </div>
+    <div class="req-panel missing">
+      <h3><span class="badge badge-missing">! Missing</span></h3>
+      <ul class="req-list" id="missingList"></ul>
+    </div>
+  </div>
+
+  <div class="sw-columns">
+    <div class="req-panel matched">
+      <h3><span class="badge badge-matched">Strengths</span></h3>
+      <ul class="req-list" id="strengthsList"></ul>
+    </div>
+    <div class="req-panel missing">
+      <h3><span class="badge badge-missing">Weaknesses</span></h3>
+      <ul class="req-list" id="weaknessesList"></ul>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <h3>Grammar &amp; wording issues</h3>
+    <ul class="limitation-list" id="grammarList"></ul>
+  </div>
+
+  <div class="section-block">
+    <h3>Missing keyword suggestions</h3>
+    <div class="keyword-chips" id="keywordChips"></div>
+  </div>
+
+  <div class="section-block">
+    <h3>Resume improvements</h3>
+    <ol class="suggestion-list" id="suggestionList"></ol>
   </div>
 
   <div class="section-block">
@@ -70,7 +118,38 @@
 </main>
 
 <footer class="site-footer">
-  <div class="container">AI / GenAI Fellowship Program — Resume Scanner</div>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>AI Resume Scanner</h4>
+        <p>AI-assisted resume and job description matching, built for the AI / GenAI Fellowship Program.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="index.html#features">Features</a>
+        <a href="upload.html">Analyze resume</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#" title="Add your docs link here">Documentation</a>
+        <a href="#" title="Add your GitHub repo link here">GitHub</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html#about">About</a>
+        <a href="#" title="Add a contact method here">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#" title="Add a privacy policy page here">Privacy</a>
+        <a href="#" title="Add a terms page here">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AI Resume Scanner — v0.1.0 (MVP)</span>
+      <span>AI / GenAI Fellowship Program</span>
+    </div>
+  </div>
 </footer>
 
 <script src="../static/js/theme.js"></script>

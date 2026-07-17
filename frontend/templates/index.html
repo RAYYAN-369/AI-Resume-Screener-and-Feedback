@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Resume Scanner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../static/css/styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      AI Resume Scanner
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#features">Features</a>
+      <a href="#" title="Add your docs link here">Docs</a>
+      <a href="#" title="Add your GitHub repo link here">GitHub</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+      <span id="themeLabel">Dark</span>
+      <span class="track"><span class="knob"></span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <p class="eyebrow">Resume ↔ job description match</p>
+      <h1>Know exactly where your resume stands — before you hit apply.</h1>
+      <p class="lede">
+        Upload a resume and a job description. In seconds you'll get a match score,
+        ATS compatibility check, evidenced requirements, honest gaps, and specific
+        suggestions — AI-assisted guidance, not an automatic hiring decision.
+      </p>
+      <div class="actions-row">
+        <a href="upload.html" class="btn btn-primary">
+          <span class="btn-label">Analyze Resume</span>
+        </a>
+      </div>
+      <div class="trust-bar">
+        <span class="trust-chip">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2l2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 7.2l5-.7L10 2z"/></svg>
+          Trusted by students
+        </span>
+        <span class="trust-chip">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4 4h12v12H4z" opacity="0"/><path d="M3 10a7 7 0 1114 0 7 7 0 01-14 0z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 6v4l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          500+ resumes analyzed
+        </span>
+        <span class="trust-chip">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2l7 3v5c0 4.5-3 7.5-7 8-4-.5-7-3.5-7-8V5l7-3z"/></svg>
+          AI powered
+        </span>
+        <span class="trust-chip">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6l7-3 7 3v4c0 4-3 6.5-7 7-4-.5-7-3-7-7V6z" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ATS compatible
+        </span>
+        <span class="trust-chip">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="9" width="12" height="8" rx="2"/><path d="M7 9V6a3 3 0 016 0v3" stroke-linecap="round"/></svg>
+          Privacy protected
+        </span>
+      </div>
+    </div>
+
+    <div class="hero-illustration" aria-hidden="true">
+      <div class="float-card resume-card">
+        <div class="rc-line head"></div>
+        <div class="rc-line"></div>
+        <div class="rc-line"></div>
+        <div class="rc-line short"></div>
+        <div class="rc-line"></div>
+        <div class="rc-line short"></div>
+      </div>
+      <div class="float-card score-preview-card">
+        <div class="sp-ring"></div>
+        <div class="sp-label">Match score</div>
+      </div>
+      <div class="float-card chart-card">
+        <div class="cc-bars">
+          <span style="height:35%"></span>
+          <span style="height:60%"></span>
+          <span style="height:45%"></span>
+          <span style="height:85%"></span>
+          <span style="height:70%"></span>
+        </div>
+        <div class="cc-label">Skills matched</div>
+      </div>
+      <div class="float-card ats-tag-card">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10.5l4 4 8-9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        ATS Compatible
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <section id="features" class="section-heading">
+    <h2>What the scanner checks</h2>
+    <p>Six checks run on every scan, so feedback covers more than just a single score.</p>
+  </section>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="2" width="12" height="16" rx="1.5"/><path d="M7 6h6M7 9h6M7 12h3" stroke-linecap="round"/></svg></div>
+      <h3>Resume analysis</h3>
+      <p>Reads the full resume text and structures it against the job's requirements.</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2" stroke-linecap="round"/></svg></div>
+      <h3>ATS score</h3>
+      <p>Estimates how well the resume format and content would pass automated screening.</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 2l7 3v5c0 4.5-3 7.5-7 8-4-.5-7-3.5-7-8V5l7-3z"/></svg></div>
+      <h3>Skill gap detection</h3>
+      <p>Flags requirements from the job description that aren't evidenced in the resume.</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 10h12M4 6h8M4 14h8" stroke-linecap="round"/></svg></div>
+      <h3>Missing keywords</h3>
+      <p>Surfaces exact terms from the job posting the resume should include but doesn't.</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 15l3-3 3 2 3-5 3 2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17h14" stroke-linecap="round"/></svg></div>
+      <h3>AI feedback</h3>
+      <p>Plain-language suggestions on how to present existing experience more strongly.</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h12v12H4z"/><path d="M7 8h6M7 11h6" stroke-linecap="round"/></svg></div>
+      <h3>Interview suggestions</h3>
+      <p>Talking points that connect your evidenced experience back to the role.</p>
+    </div>
+  </div>
+
+  <div id="about" class="about-block">
+    <p class="eyebrow" style="margin-bottom: 8px;">About this project</p>
+    <p>
+      Built as part of the AI / GenAI Fellowship Program. The scanner is designed
+      as guidance for candidates and recruiters — not an automatic hiring decision-maker.
+      Resume text is only used for the scan you run.
+    </p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>AI Resume Scanner</h4>
+        <p>AI-assisted resume and job description matching, built for the AI / GenAI Fellowship Program.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="index.html#features">Features</a>
+        <a href="upload.html">Analyze resume</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#" title="Add your docs link here">Documentation</a>
+        <a href="#" title="Add your GitHub repo link here">GitHub</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html#about">About</a>
+        <a href="#" title="Add a contact method here">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#" title="Add a privacy policy page here">Privacy</a>
+        <a href="#" title="Add a terms page here">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AI Resume Scanner — v0.1.0 (MVP)</span>
+      <span>AI / GenAI Fellowship Program</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../static/js/theme.js"></script>
+</body>
+</html>

@@ -137,8 +137,8 @@ All new features should be developed in a feature branch and merged into `dev` t
 | -------------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | **Muhammad Rayyan Bhatti** | Team Leader & Full-Stack Developer | Repository setup, Git workflow, project planning, code reviews, pull requests, backend integration, and project coordination. |
 | **Asfaar Maham Ghazi**     | Frontend Developer                 | Develop responsive user interfaces using HTML, CSS, and JavaScript.                                                           |
-| **Huzaifa Haider Khan**    | Backend Developer                  | Develop Flask APIs, implement business logic, and manage server-side functionality.                                           |
-| **Zain**                   | AI & Documentation Developer       | Research AI techniques, assist with resume analysis, maintain documentation, and support project reporting.                   |
+| **Zain**    | Backend Developer                  | Develop Flask APIs, implement business logic, and manage server-side functionality.                                           |
+| **Huzaifa Haider Khan**                   | AI & Documentation Developer       | Research AI techniques, assist with resume analysis, maintain documentation, and support project reporting.                   |
 
 ---
 

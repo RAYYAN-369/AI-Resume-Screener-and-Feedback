@@ -363,13 +363,13 @@ Add screenshots here after completing the project.
 ### Upload Page
 
 ```
-/docs/screenshots/upload-page.png
+AI-Resume-Screener-and-Feedback\frontend\images
 ```
 
 ### Result Page
 
 ```
-/docs/screenshots/result-page.png
+AI-Resume-Screener-and-Feedback\frontend\images
 ```
 
 ---
@@ -387,7 +387,7 @@ docs/demo.mp4
 or
 
 ```
-https://youtu.be/your-demo-video
+https://drive.google.com/file/d/11vlVGrLLoBXYGHbGN7NMvemoohbKAKIm/view?usp=drive_link
 ```
 
 ---

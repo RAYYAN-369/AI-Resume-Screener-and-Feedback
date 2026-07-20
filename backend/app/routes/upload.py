@@ -3,6 +3,7 @@ from pathlib import Path
 from uuid import uuid4
 import shutil
 import re
+import logging
 
 from app.config import UPLOAD_FOLDER
 from app.utils.file_validator import allowed_file
@@ -11,19 +12,20 @@ from app.services.ollama_service import analyze_resume
 
 router = APIRouter()
 
+# Create uploads folder if it doesn't exist
 Path(UPLOAD_FOLDER).mkdir(parents=True, exist_ok=True)
 
 
-def parse_resume(text):
+def parse_resume(text: str):
 
     email = ""
     phone = ""
 
-    email_match = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', text)
+    email_match = re.search(r"[\w\.-]+@[\w\.-]+\.\w+", text)
     if email_match:
         email = email_match.group()
 
-    phone_match = re.search(r'(\+?\d[\d\s\-]{8,15})', text)
+    phone_match = re.search(r"(\+?\d[\d\s\-]{8,15})", text)
     if phone_match:
         phone = phone_match.group().strip()
 
@@ -66,8 +68,8 @@ def parse_resume(text):
     ]
 
     for line in text.splitlines():
-        for word in education_keywords:
-            if word.lower() in line.lower():
+        for keyword in education_keywords:
+            if keyword.lower() in line.lower():
                 education.append(line.strip())
                 break
 
@@ -81,8 +83,8 @@ def parse_resume(text):
     ]
 
     for line in text.splitlines():
-        for word in project_keywords:
-            if word.lower() in line.lower():
+        for keyword in project_keywords:
+            if keyword.lower() in line.lower():
                 projects.append(line.strip())
                 break
 
@@ -117,9 +119,16 @@ def parse_resume(text):
 async def upload_resume(
 
     resume: UploadFile = File(...),
-    job_description: str = Form(...)
+
+    job_description: str = Form(None),
+
+    job_description_file: UploadFile = File(None)
 
 ):
+
+    # -------------------------------
+    # Validate Resume
+    # -------------------------------
 
     if not resume.filename:
         raise HTTPException(
@@ -130,31 +139,105 @@ async def upload_resume(
     if not allowed_file(resume.filename):
         raise HTTPException(
             status_code=400,
-            detail="Only PDF and DOCX files are allowed."
+            detail="Only PDF and DOCX resumes are allowed."
         )
 
-    unique_filename = f"{uuid4().hex}_{resume.filename}"
+    # -------------------------------
+    # Validate Job Description
+    # -------------------------------
 
-    file_path = Path(UPLOAD_FOLDER) / unique_filename
+    if not job_description and not job_description_file:
+        raise HTTPException(
+            status_code=400,
+            detail="Please provide a Job Description or upload a Job Description file."
+        )
+
+    if job_description_file:
+
+        if not job_description_file.filename:
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid Job Description file."
+            )
+
+        if not allowed_file(job_description_file.filename):
+            raise HTTPException(
+                status_code=400,
+                detail="Job Description must be PDF or DOCX."
+            )
 
     try:
 
-        with open(file_path, "wb") as buffer:
+        # -------------------------------
+        # Save Resume
+        # -------------------------------
+
+        resume_filename = f"{uuid4().hex}_{resume.filename}"
+
+        resume_path = Path(UPLOAD_FOLDER) / resume_filename
+
+        with open(resume_path, "wb") as buffer:
             shutil.copyfileobj(resume.file, buffer)
 
-        extension = resume.filename.rsplit(".", 1)[1].lower()
+        resume_extension = resume.filename.rsplit(".", 1)[1].lower()
 
-        if extension == "pdf":
-            extracted_text = extract_pdf_text(file_path)
+        if resume_extension == "pdf":
+            resume_text = extract_pdf_text(resume_path)
         else:
-            extracted_text = extract_docx_text(file_path)
+            resume_text = extract_docx_text(resume_path)
 
-        parsed_resume = parse_resume(extracted_text)
+        # -------------------------------
+        # Read Job Description
+        # -------------------------------
 
-        ai_feedback = analyze_resume(
-            extracted_text,
-            job_description
+        if job_description_file:
+
+            jd_filename = f"{uuid4().hex}_{job_description_file.filename}"
+
+            jd_path = Path(UPLOAD_FOLDER) / jd_filename
+
+            with open(jd_path, "wb") as buffer:
+                shutil.copyfileobj(job_description_file.file, buffer)
+
+            jd_extension = job_description_file.filename.rsplit(".", 1)[1].lower()
+
+            if jd_extension == "pdf":
+                job_description = extract_pdf_text(jd_path)
+            else:
+                job_description = extract_docx_text(jd_path)
+
+        # -------------------------------
+        # Parse Resume
+        # -------------------------------
+
+        parsed_resume = parse_resume(resume_text)
+
+        # -------------------------------
+        # AI Analysis
+        # -------------------------------
+
+        print("=" * 60)
+        print("Starting AI Analysis...")
+        print("=" * 60)
+
+        print("=" * 60)
+        print("Resume Length:", len(resume_text))
+        print("Job Description Length:", len(job_description))
+        print("=" * 60)
+
+        analysis = analyze_resume(
+            resume_text[:4000],
+            job_description[:2000]
         )
+
+        print("=" * 60)
+        print("AI Analysis Completed")
+        print(analysis)
+        print("=" * 60)
+
+        # -------------------------------
+        # Response
+        # -------------------------------
 
         return {
 
@@ -162,19 +245,21 @@ async def upload_resume(
 
             "message": "Resume analyzed successfully.",
 
-            "filename": unique_filename,
+            "filename": resume_filename,
 
             "resume": parsed_resume,
 
-            "analysis": ai_feedback,
+            "analysis": analysis,
 
             "job_description": job_description,
 
-            "raw_text": extracted_text
+            "raw_text": resume_text
 
         }
 
     except Exception as e:
+
+        logging.exception("Upload Route Error")
 
         raise HTTPException(
             status_code=500,

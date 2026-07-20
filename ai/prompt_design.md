@@ -1,136 +1,230 @@
-\# Gemini Prompt Design — AI Resume Screener
+# Ollama Prompt Design — AI Resume Screener & Feedback
 
+## Current Implementation (feature/backend)
 
+**File:** `backend/app/services/ollama_service.py`
 
-\## Current Implementation (feature/backend)
+**Model:** `llama3.2:3b` (or the model configured in `.env`)
 
-File: backend/app/services/gemini\_service.py
+**Function:** `analyze_resume(resume_text, job_description)`
 
-Model: gemini-2.0-flash
+---
 
-Function: analyze\_resume(resume\_text)
+## Current Prompt Behavior
 
+The AI module performs an ATS-style comparison between the uploaded resume and the provided job description.
 
+### Inputs
 
-\### Current Prompt Behavior
+- Resume PDF/DOCX
+- Job Description (Pasted Text)
+- Job Description PDF/DOCX
 
-\- Analyzes resume ONLY (no job description comparison)
+### Processing Flow
 
-\- Returns plain text in fixed format:
+1. Extract text from Resume.
+2. Extract text from Job Description (if uploaded).
+3. Compare Resume against Job Description.
+4. Calculate ATS Score.
+5. Generate AI feedback using Ollama.
+6. Return structured JSON.
 
-&#x20; Overall Score: X/10
+### Current Output
 
-&#x20; Strengths: - Weaknesses: - Suggestions:
+Returns structured JSON instead of plain text.
 
-\- No structured JSON output
+Current fields include:
 
-\- No schema validation
+- overall_score
+- ats_score
+- matched_skills
+- missing_skills
+- strengths
+- weaknesses
+- grammar_issues
+- formatting_feedback
+- experience_feedback
+- education_feedback
+- projects_feedback
+- keyword_recommendations
+- interview_readiness
+- summary
+- suggestions
 
-\- No retry logic for API failures
+---
 
+# Objectives
 
+The AI should behave like a professional:
 
-\## Gaps Identified
+- ATS Scanner
+- HR Recruiter
+- Technical Recruiter
+- Resume Reviewer
+- Career Coach
 
-1\. No job description input — cannot measure resume-to-job fit
+The AI should compare the resume directly against the supplied Job Description and provide constructive, accurate, and actionable feedback.
 
-2\. Free text output cannot be reliably parsed by frontend
+---
 
-3\. No validation of Gemini's response before displaying to user
+# Prompt (Current Version)
 
-4\. No handling for empty/malformed resume text
+You are an experienced HR recruiter, ATS specialist, technical interviewer, and career coach.
 
-5\. No retry logic for rate limits (429) or network errors
+Your task is to compare the candidate's resume with the provided Job Description.
 
+Evaluate the resume exactly like a modern Applicant Tracking System (ATS).
 
+Follow these rules carefully:
 
-\## Proposed Improved Prompt (v2)
-
-
-
-You are an experienced HR recruiter and resume reviewer.
-
-Analyze the resume text provided below and return ONLY valid JSON.
-
-Do not include any text, explanation, or markdown formatting outside the JSON object.
-
-
-
-Follow these rules:
-
-\- Base every point strictly on the resume text provided. Do not invent skills, employers, or dates that are not present.
-
-\- Be constructive and specific rather than generic.
-
-\- If the resume is too short or unclear to assess fairly, say so in "limitations" instead of guessing.
-
-
-
-Return JSON in exactly this structure:
-
-{
-
-&#x20; "overall\_score": <integer 0-10>,
-
-&#x20; "score\_rationale": "<one sentence explaining the score>",
-
-&#x20; "strengths": \["<point 1>", "<point 2>", "<point 3>"],
-
-&#x20; "weaknesses": \["<point 1>", "<point 2>"],
-
-&#x20; "suggestions": \["<point 1>", "<point 2>", "<point 3>"],
-
-&#x20; "limitations": "<note any uncertainty due to missing/unclear resume info, or empty string if none>"
-
-}
-
-
+- Return ONLY valid JSON.
+- Never return Markdown.
+- Never explain outside JSON.
+- Never invent skills, projects, companies, education, certifications, or experience.
+- Base every point only on the Resume and Job Description provided.
+- If the resume lacks enough information, mention it in Suggestions.
+- If the Job Description is missing information, continue using the available text.
+- Compare both technical skills and soft skills.
+- Detect missing keywords.
+- Detect grammar issues.
+- Detect formatting issues.
+- Evaluate projects.
+- Evaluate education.
+- Evaluate work experience.
+- Evaluate interview readiness.
+- Give realistic ATS scoring.
 
 Resume:
 
-{resume\_text}
+{resume_text}
 
+Job Description:
 
+{job_description}
 
-\## Proposed JSON Output Schema
+Return ONLY valid JSON.
 
+---
 
+# Required JSON Schema
 
-| Field           | Type            | Description                                      |
+```json
+{
+    "overall_score": 0,
+    "ats_score": 0,
+    "matched_skills": [],
+    "missing_skills": [],
+    "strengths": [],
+    "weaknesses": [],
+    "grammar_issues": [],
+    "formatting_feedback": [],
+    "experience_feedback": [],
+    "education_feedback": [],
+    "projects_feedback": [],
+    "keyword_recommendations": [],
+    "interview_readiness": "",
+    "summary": "",
+    "suggestions": []
+}
+```
 
-|-----------------|-----------------|---------------------------------------------------|
+---
 
-| overall\_score   | integer (0-10)  | Overall resume quality score                      |
+# JSON Schema Description
 
-| score\_rationale | string          | Short explanation for the score                   |
+| Field | Type | Description |
+|--------|------|-------------|
+| overall_score | Integer (0–100) | Overall quality of the resume |
+| ats_score | Integer (0–100) | ATS match score based on Job Description |
+| matched_skills | Array | Skills found in both Resume and Job Description |
+| missing_skills | Array | Skills required by the Job Description but missing from the Resume |
+| strengths | Array | Strong aspects of the Resume |
+| weaknesses | Array | Weak areas that should be improved |
+| grammar_issues | Array | Grammar mistakes detected |
+| formatting_feedback | Array | Suggestions about formatting and readability |
+| experience_feedback | Array | Feedback about work experience |
+| education_feedback | Array | Feedback about education section |
+| projects_feedback | Array | Feedback about projects |
+| keyword_recommendations | Array | ATS keywords recommended for improvement |
+| interview_readiness | String | Interview readiness level |
+| summary | String | Overall AI-generated summary |
+| suggestions | Array | Actionable improvement recommendations |
 
-| strengths       | array of string | 2-4 specific strong points found in the resume    |
+---
 
-| weaknesses      | array of string | 1-3 specific weak points found in the resume      |
+# Validation Rules
 
-| suggestions     | array of string | 2-3 actionable improvement suggestions            |
+The AI must always:
 
-| limitations     | string          | Notes if resume was too short/unclear to assess   |
+- Return valid JSON.
+- Include every required field.
+- Never omit any field.
+- Use empty arrays when there is no data.
+- Use empty strings when necessary.
+- Keep scores between 0 and 100.
+- Never return null values.
+- Never hallucinate information.
 
+---
 
+# Error Handling
 
-\## Why This Is Better Than the Current Prompt
+If Resume text cannot be extracted:
 
-1\. Structured JSON instead of free text → frontend can reliably display fields instead of parsing raw text
+- Return an appropriate backend error.
+- Do not send an empty prompt to Ollama.
 
-2\. score\_rationale added → makes the score explainable, not just a number
+If Job Description is empty:
 
-3\. limitations field added → prevents Gemini from guessing on incomplete resumes
+- Analyze the Resume independently.
+- Set ATS Score to 0 or a suitable default.
+- Continue generating resume feedback.
 
-4\. Explicit instruction against inventing information → reduces hallucination risk
+If Ollama returns invalid JSON:
 
+- Attempt to extract the JSON object.
+- Validate the schema.
+- Return a default response if validation fails.
 
+---
 
-\## Future Extension (Not in v2)
+# Advantages Over Previous Gemini Prompt
 
-\- Add job\_description parameter and matched\_requirements / missing\_requirements fields
+The previous implementation:
 
-&#x20; once the app supports uploading a job description, matching the CLI concept from
+- Analyzed only the Resume.
+- Returned plain text.
+- Had no ATS comparison.
+- Had no Job Description support.
+- Had no structured response.
+- Was difficult for the frontend to parse.
 
-&#x20; the AI\_Resume\_Scanner\_Overview reference document.
+The current implementation:
 
+- Supports Resume + Job Description comparison.
+- Supports both pasted and uploaded Job Descriptions.
+- Returns structured JSON.
+- Calculates ATS Score.
+- Detects matched and missing skills.
+- Provides detailed feedback for grammar, formatting, education, projects, and experience.
+- Gives interview readiness assessment.
+- Is fully compatible with the frontend and backend APIs.
+
+---
+
+# Future Improvements
+
+Possible future enhancements include:
+
+- Multi-language resume analysis.
+- Industry-specific ATS scoring.
+- Role-specific scoring models.
+- Cover Letter analysis.
+- Resume rewriting suggestions.
+- Resume keyword optimization.
+- STAR interview question generation.
+- AI-generated cover letter based on the uploaded Resume and Job Description.
+- Resume ranking against multiple Job Descriptions.
+- Support for multiple Ollama models.
+- Streaming AI responses.
+- Automatic JSON schema validation before returning results.

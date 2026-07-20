@@ -1,185 +1,425 @@
-# AI Resume Screener & Feedback
+# 🤖 AI Resume Screener & Feedback
 
-An AI-powered web application that analyzes resumes and provides intelligent feedback to help users improve their resumes and increase their chances of passing the initial recruitment screening process.
-
----
-
-## 📌 Overview
-
-The **AI Resume Screener & Feedback** project is designed to automate the initial resume evaluation process. Users can upload their resumes, and the system analyzes the content to provide feedback on skills, experience, formatting, and overall quality.
-
-This project is being developed as part of the **AI & Generative AI Fellowship**.
+An AI-powered Resume Screening System that analyzes resumes against a Job Description (JD), calculates an ATS compatibility score, identifies matched and missing skills, and generates personalized resume feedback using a locally hosted Large Language Model (LLM) through Ollama.
 
 ---
 
-## ✨ Features
+# 📌 Overview
 
-* Upload resumes in supported formats
-* AI-assisted resume analysis
-* Resume quality feedback and suggestions
-* User-friendly web interface
-* Secure file handling
-* Modular project architecture
+The **AI Resume Screener & Feedback** project helps job seekers optimize their resumes before applying for jobs.
 
----
+The system compares a candidate's resume with a Job Description and provides intelligent feedback to improve the chances of passing Applicant Tracking Systems (ATS) and technical recruitment screening.
 
-## 🛠️ Tech Stack
-
-### Backend
-
-* Python
-* Flask
-
-### Frontend
-
-* HTML5
-* CSS3
-* JavaScript
-
-### AI & Data
-
-* Python
-* Machine Learning (planned)
-
-### Version Control
-
-* Git
-* GitHub
+This project was developed as part of the **AI & Generative AI Fellowship**.
 
 ---
 
-## 📁 Project Structure
+# ✨ Features
+
+- 📄 Upload Resume (PDF/DOCX)
+- 📋 Upload Job Description (PDF/DOCX)
+- ✍️ Paste Job Description Text
+- 🤖 AI Resume Analysis
+- 🎯 ATS Match Score
+- 📊 Overall Resume Score
+- ✅ Matched Skills Detection
+- ❌ Missing Skills Detection
+- 💡 Resume Summary
+- 💪 Strengths & Weaknesses
+- 📝 Grammar Feedback
+- 🎨 Formatting Suggestions
+- 🎓 Education Feedback
+- 🚀 Project Feedback
+- 🎤 Interview Readiness
+- 📈 Resume Improvement Suggestions
+- 🔒 Secure File Handling
+- 💻 Responsive User Interface
+- 🧠 Local AI using Ollama (No Paid API Required)
+
+---
+
+# 🛠 Tech Stack
+
+## Backend
+
+- Python
+- FastAPI
+- Uvicorn
+
+## Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+
+## AI
+
+- Ollama
+- Qwen2.5:1.5B or llama3.2:3b (Configurable)
+- Prompt Engineering
+
+## Libraries
+
+- PyPDF
+- python-docx
+- Ollama Python SDK
+
+## Version Control
+
+- Git
+- GitHub
+
+---
+
+# 📂 Project Structure
 
 ```text
 AI-Resume-Screener-and-Feedback/
 │
 ├── backend/
-│   ├── app.py
-│   ├── routes/
-│   ├── models/
-│   └── services/
+│   │
+│   ├── app/
+│   │   ├── config.py
+│   │   ├── routes/
+│   │   │   └── upload.py
+│   │   ├── services/
+│   │   │   ├── ats_service.py
+│   │   │   ├── extractor.py
+│   │   │   ├── ollama_service.py
+│   │   │   └── prompt_builder.py
+│   │   ├── utils/
+│   │   └── main.py
+│   │
+│   ├── uploads/
+│   └── requirements.txt
 │
 ├── frontend/
-│   ├── css/
-│   ├── js/
+│   │
 │   ├── images/
-│   └── index.html
+|   ├── static/
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/
+│   │
+│   └── templates/
+│       ├── upload.html
+|       ├── index.html
+│       └── result.html
 │
-├── ai/
-│   ├── dataset/
-│   ├── model/
-│   └── preprocessing/
-│
-├── docs/
-│   ├── report/
-│   ├── screenshots/
-│   └── meeting-notes.md
-│
-├── .env.example
-├── .gitignore
-├── LICENSE
 ├── README.md
-└── requirements.txt
+├── LICENSE
+└── .gitignore
 ```
 
 ---
 
-## 🚀 Getting Started
+# 🚀 Installation
 
-### 1. Clone the Repository
+## 1. Clone Repository
 
 ```bash
-git clone https://github.com/RAYYAN-9/AI-Resume-Screener-and-Feedback.git
+git clone https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback.git
 ```
 
-### 2. Navigate to the Project Directory
+---
+
+## 2. Navigate to Project
 
 ```bash
 cd AI-Resume-Screener-and-Feedback
 ```
 
-### 3. Install Dependencies
+---
+
+## 3. Create Virtual Environment
+
+### Windows
+
+```bash
+python -m venv .venv
+```
+
+Activate
+
+```bash
+.venv\Scripts\activate
+```
+
+---
+
+### Linux / macOS
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+---
+
+## 4. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure Environment Variables
+---
 
-Create a `.env` file based on `.env.example` and add your local configuration values.
+# 🤖 Install Ollama
 
-### 5. Run the Application
+Download Ollama from:
+
+https://ollama.com/download
+
+After installation pull the model:
 
 ```bash
-python app.py
+ollama pull qwen2.5:1.5b
+ollama pull llama3.2:3b
+```
+
+Verify installation:
+
+```bash
+ollama list
 ```
 
 ---
 
-## 🌿 Git Workflow
+# ⚙ Configuration
 
-The project follows a branch-based workflow:
+Update your `config.py` file:
 
-* `main` – Production-ready code
-* `dev` – Integration branch
-* `feature/project-setup` – Repository setup and project management
-* `feature/backend` – Backend development
-* `feature/frontend` – Frontend development
-* `feature/ai-documentation` – AI research and documentation
-
-All new features should be developed in a feature branch and merged into `dev` through a Pull Request before being merged into `main`.
+```python
+OLLAMA_MODEL = "qwen2.5:1.5b" and "llama3.2:3b"
+OLLAMA_HOST = "http://localhost:11434"
+```
 
 ---
 
-## 👥 Team & Responsibilities
+# ▶ Run the Application
 
-| Team Member                | Role                               | Responsibilities                                                                                                              |
-| -------------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| **Muhammad Rayyan Bhatti** | Team Leader & Full-Stack Developer | Repository setup, Git workflow, project planning, code reviews, pull requests, backend integration, and project coordination. |
-| **Asfaar Maham Ghazi**     | Frontend Developer                 | Develop responsive user interfaces using HTML, CSS, and JavaScript.                                                           |
-| **Zain**    | Backend Developer                  | Develop Flask APIs, implement business logic, and manage server-side functionality.                                           |
-| **Huzaifa Haider Khan**                   | AI & Documentation Developer       | Research AI techniques, assist with resume analysis, maintain documentation, and support project reporting.                   |
+Start the FastAPI server:
 
----
+```bash
+uvicorn main:app --reload
+```
 
-## 📌 Project Management
+Open your browser:
 
-The team uses GitHub Issues and Pull Requests to:
-
-* Track development tasks
-* Assign responsibilities
-* Review code changes
-* Manage project progress
+```
+http://127.0.0.1:8000
+```
 
 ---
 
-## 🔒 Security
+# 📁 Supported File Formats
 
-* Sensitive information is stored locally in the `.env` file.
-* The `.env` file is excluded from version control using `.gitignore`.
-* Only the `.env.example` template is included in the repository.
+## Resume
+
+- PDF
+- DOCX
+
+## Job Description
+
+- PDF
+- DOCX
+- Plain Text
 
 ---
 
-## 📄 License
+# 🧠 AI Analysis Includes
+
+The AI generates:
+
+- ATS Match Score
+- Overall Resume Score
+- Resume Summary
+- Matched Skills
+- Missing Skills
+- Strengths
+- Weaknesses
+- Grammar Feedback
+- Formatting Feedback
+- Experience Feedback
+- Education Feedback
+- Project Feedback
+- Keyword Recommendations
+- Interview Readiness
+- Resume Improvement Suggestions
+
+---
+
+# ⚙ How It Works
+
+```text
+                  Resume
+                     │
+                     ▼
+            Resume Text Extraction
+                     │
+                     ▼
+            Upload Job Description
+                     │
+                     ▼
+              ATS Skill Matching
+                     │
+                     ▼
+          Generate AI Prompt
+                     │
+                     ▼
+          Ollama (Qwen2.5:1.5B)
+                     │
+                     ▼
+          AI Resume Analysis
+                     │
+                     ▼
+            Display Results
+```
+
+---
+
+# 📌 API Endpoint
+
+### Analyze Resume
+
+```
+POST /upload
+```
+
+### Form Data
+
+| Field | Type |
+|---------|------|
+| resume | PDF / DOCX |
+| job_description | Text |
+| job_description_file | PDF / DOCX |
+
+---
+
+# 📈 Future Improvements
+
+- Semantic ATS Matching using Sentence Transformers
+- Resume Ranking System
+- Multi Resume Comparison
+- Cover Letter Generator
+- AI Interview Question Generator
+- Resume Templates
+- User Authentication
+- Dashboard Analytics
+- Resume History
+- Export Report as PDF
+- Multi-language Support
+
+---
+
+# 👥 Team
+
+| Team Member | Role |
+|--------------|------|
+| **Muhammad Rayyan Bhatti** | Team Leader & Full Stack Developer |
+| **Asfaar Maham Ghazi** | Frontend Developer |
+| **Zain Ali Haider** | Backend Developer |
+| **Huzaifa Haider Khan** | AI & Documentation |
+
+---
+
+# 📌 Project Management
+
+The project follows a Git-based workflow.
+
+### Branches
+
+- `main` — Stable Production Code
+- `dev` — Integration Branch
+- `feature/frontend`
+- `feature/backend`
+- `feature/ai`
+
+Development workflow:
+
+1. Create Feature Branch
+2. Commit Changes
+3. Push Branch
+4. Open Pull Request
+5. Review
+6. Merge into `dev`
+7. Merge into `main`
+
+---
+
+# 🔒 Security
+
+- Uploaded files are processed locally.
+- No external AI APIs are required.
+- Environment variables are stored in `.env`.
+- Sensitive files are ignored using `.gitignore`.
+
+---
+
+# 📸 Screenshots
+
+Add screenshots here after completing the project.
+
+### Upload Page
+
+```
+/docs/screenshots/upload-page.png
+```
+
+### Result Page
+
+```
+/docs/screenshots/result-page.png
+```
+
+---
+
+# 🎥 Demo
+
+Add your project demo video or GIF here.
+
+Example:
+
+```
+docs/demo.mp4
+```
+
+or
+
+```
+https://youtu.be/your-demo-video
+```
+
+---
+
+# 🤝 Contributing
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Commit your changes.
+4. Push the branch.
+5. Open a Pull Request.
+
+---
+
+# 📄 License
 
 This project is developed for educational purposes as part of the **AI & Generative AI Fellowship**.
 
 ---
 
-## 🤝 Contributing
+# 📬 Contact
 
-1. Create a new feature branch.
-2. Make small, meaningful commits.
-3. Open a Pull Request.
-4. Request a teammate review.
-5. Merge into the `dev` branch after approval.
+## Muhammad Rayyan Bhatti
+
+**GitHub**
+
+https://github.com/RAYYAN-369
+
+**LinkedIn**
+
+https://www.linkedin.com/in/muhammad-rayyan-bhatti-145956285/
 
 ---
 
-## 📬 Contact
-
-**Muhammad Rayyan Bhatti**
-
-* GitHub: https://github.com/RAYYAN-9
-* LinkedIn: https://www.linkedin.com/in/muhammad-rayyan-bhatti-145956285/
+⭐ If you found this project useful, consider giving it a **Star** on GitHub.

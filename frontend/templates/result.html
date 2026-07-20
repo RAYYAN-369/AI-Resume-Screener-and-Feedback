@@ -6,7 +6,7 @@
 <title>Results — AI Resume Scanner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../static/css/styles.css" />
+<link rel="stylesheet" href="/static/css/styles.css" />
 </head>
 <body>
 
@@ -17,11 +17,11 @@
       AI Resume Scanner
     </a>
     <nav class="site-nav">
-      <a href="index.html">Home</a>
-      <a href="index.html#features">Features</a>
+      <a href="/">Home</a>
+      <a href="/#features">Features</a>
       <a href="#" title="Add your docs link here">Docs</a>
       <a href="#" title="Add your GitHub repo link here">GitHub</a>
-      <a href="index.html#about">About</a>
+      <a href="/#about">About</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
       <span id="themeLabel">Dark</span>
@@ -39,7 +39,7 @@
     </div>
     <div class="score-copy">
       <p class="eyebrow" id="scoreEyebrow">Overall match score</p>
-      <h2 style="margin:0;">How this resume lines up with the role</h2>
+      <h2 style="margin:0;">Resume Analysis Report</h2>
       <p id="scoreRationale">Loading assessment…</p>
     </div>
   </section>
@@ -62,6 +62,11 @@
   <div class="section-block">
     <h3>AI summary</h3>
     <p class="ai-summary" id="aiSummary">–</p>
+  </div>
+
+  <div class="section-block">
+    <h3>Interview Readiness</h3>
+    <p class="ai-summary" id="interviewReadiness">Loading...</p>
   </div>
 
   <div class="req-columns">
@@ -87,12 +92,32 @@
   </div>
 
   <div class="section-block">
-    <h3>Grammar &amp; wording issues</h3>
+    <h3>✍️ Grammar & Writing &amp; wording issues</h3>
     <ul class="limitation-list" id="grammarList"></ul>
   </div>
 
   <div class="section-block">
-    <h3>Missing keyword suggestions</h3>
+    <h3>📝 Formatting Feedback</h3>
+    <ul class="limitation-list" id="formattingList"></ul>
+  </div>
+
+  <div class="section-block">
+    <h3>💼 Experience Feedback</h3>
+    <ul class="limitation-list" id="experienceList"></ul>
+  </div>
+
+  <div class="section-block">
+    <h3>🎓 Education Feedback</h3>
+    <ul class="limitation-list" id="educationList"></ul>
+  </div>
+
+  <div class="section-block">
+    <h3>🚀 Projects Feedback</h3>
+    <ul class="limitation-list" id="projectsList"></ul>
+  </div>
+
+  <div class="section-block">
+    <h3>Keyword Recommendations</h3>
     <div class="keyword-chips" id="keywordChips"></div>
   </div>
 
@@ -102,7 +127,7 @@
   </div>
 
   <div class="section-block">
-    <h3>Limitations</h3>
+    <h3>Additional Notes</h3>
     <ul class="limitation-list" id="limitationList"></ul>
     <p class="disclaimer">
       This is AI-assisted guidance, not a hiring decision. Scores can vary slightly
@@ -111,8 +136,9 @@
     </p>
   </div>
 
+  <hr class="section-divider">
   <div class="actions-row">
-    <a href="upload.html" class="btn btn-ghost">Run another scan</a>
+    <a href="/" class="btn btn-ghost">Run another scan</a>
   </div>
 
 </main>
@@ -126,8 +152,8 @@
       </div>
       <div class="footer-col">
         <h4>Product</h4>
-        <a href="index.html#features">Features</a>
-        <a href="upload.html">Analyze resume</a>
+        <a href="/#features">Features</a>
+        <a href="/">Analyze resume</a>
       </div>
       <div class="footer-col">
         <h4>Resources</h4>
@@ -136,7 +162,7 @@
       </div>
       <div class="footer-col">
         <h4>Company</h4>
-        <a href="index.html#about">About</a>
+        <a href="/#about">About</a>
         <a href="#" title="Add a contact method here">Contact</a>
       </div>
       <div class="footer-col">
@@ -152,7 +178,7 @@
   </div>
 </footer>
 
-<script src="../static/js/theme.js"></script>
-<script src="../static/js/results.js"></script>
+<script src="/static/js/theme.js"></script>
+<script src="/static/js/results.js"></script>
 </body>
 </html>

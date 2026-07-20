@@ -4,7 +4,20 @@ from dotenv import load_dotenv
 load_dotenv()
 
 UPLOAD_FOLDER = "uploads"
-ALLOWED_EXTENSIONS = {"pdf", "docx"}
+
+ALLOWED_EXTENSIONS = {
+    "pdf",
+    "docx"
+}
+
 MAX_FILE_SIZE = 5 * 1024 * 1024
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+OLLAMA_MODEL = os.getenv(
+    "OLLAMA_MODEL",
+    "llama3.2:3b"
+)
+
+OLLAMA_HOST = os.getenv(
+    "OLLAMA_HOST",
+    "http://localhost:11434"
+).rstrip("/")

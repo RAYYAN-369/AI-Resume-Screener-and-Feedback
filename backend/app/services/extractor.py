@@ -12,7 +12,13 @@ def extract_pdf_text(file_path):
         page_text = page.extract_text()
 
         if page_text:
-            text += page_text + "\n"
+            text += page_text.strip() + "\n"
+
+    print("=" * 60)
+    print("Extracted Resume Text")
+    print("=" * 60)
+    print(text[:1000])   # Show first 1000 characters
+    print("=" * 60)
 
     return text
 

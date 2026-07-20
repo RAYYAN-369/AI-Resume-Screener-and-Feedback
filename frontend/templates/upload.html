@@ -6,7 +6,7 @@
 <title>Upload — AI Resume Scanner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../static/css/styles.css" />
+<link rel="stylesheet" href="/static/css/styles.css" />
 </head>
 <body>
 
@@ -17,11 +17,11 @@
       AI Resume Scanner
     </a>
     <nav class="site-nav">
-      <a href="index.html">Home</a>
-      <a href="index.html#features">Features</a>
+      <a href="/">Home</a>
+      <a href="/#features">Features</a>
       <a href="#" title="Add your docs link here">Docs</a>
       <a href="#" title="Add your GitHub repo link here">GitHub</a>
-      <a href="index.html#about">About</a>
+      <a href="/#about">About</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
       <span id="themeLabel">Dark</span>
@@ -60,9 +60,9 @@
             <span id="resumeFileName">file.pdf</span>
             <span aria-hidden="true" style="margin-left:4px; cursor:pointer;">✕</span>
           </span>
-          <input type="file" id="resumeFile" accept=".pdf,.txt" />
+          <input type="file" id="resumeFile" accept=".pdf,.docx" />
         </div>
-        <p class="format-note"><span>Formats: PDF, TXT</span><span>Max size: 8MB</span></p>
+        <p class="format-note"><span>Formats: PDF, DOCX</span><span>Max size: 8MB</span></p>
 
         <div class="progress-wrap" id="resumeProgressWrap">
           <div class="progress-track"><div class="progress-fill" id="resumeProgressFill"></div></div>
@@ -107,7 +107,7 @@
             </span>
             <input type="file" id="jdFile" accept=".pdf,.txt" />
           </div>
-          <p class="format-note"><span>Formats: PDF, TXT</span><span>Max size: 8MB</span></p>
+          <p class="format-note"><span>Formats: PDF, DOCX</span><span>Max size: 8MB</span></p>
         </div>
       </div>
 
@@ -177,7 +177,7 @@
   </div>
 </footer>
 
-<script src="../static/js/theme.js"></script>
-<script src="../static/js/upload.js"></script>
+<script src="/static/js/theme.js"></script>
+<script src="/static/js/upload.js"></script>
 </body>
 </html>

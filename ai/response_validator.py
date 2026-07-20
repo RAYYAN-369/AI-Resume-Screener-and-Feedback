@@ -1,11 +1,12 @@
 """
-Response Validator — AI Resume Screener
+Response Validator — AI Resume Screener & Feedback
 
-Validates Gemini's JSON response against the proposed v2 schema
-(see ai/prompt_design.md) before it is shown to the user.
+Validates the JSON response returned by Ollama against the
+expected schema defined in ai/prompt_design.md.
 
-This uses Pydantic, matching the validation approach described in the
-project's reference documentation (AI_Resume_Scanner_Overview).
+The validator ensures that every required field exists,
+has the correct data type, and contains valid values
+before the response is sent to the frontend.
 """
 
 import json
@@ -14,89 +15,245 @@ from pydantic import BaseModel, ValidationError, field_validator
 
 class ResumeAssessment(BaseModel):
     overall_score: int
-    score_rationale: str
+    ats_score: int
+
+    matched_skills: list[str]
+    missing_skills: list[str]
+
     strengths: list[str]
     weaknesses: list[str]
+
+    grammar_issues: list[str]
+    formatting_feedback: list[str]
+    experience_feedback: list[str]
+    education_feedback: list[str]
+    projects_feedback: list[str]
+
+    keyword_recommendations: list[str]
+
+    interview_readiness: str
+    summary: str
+
     suggestions: list[str]
-    limitations: str
 
-    @field_validator("overall_score")
+    @field_validator("overall_score", "ats_score")
     @classmethod
-    def score_in_range(cls, v):
-        if not (0 <= v <= 10):
-            raise ValueError("overall_score must be between 0 and 10")
-        return v
+    def validate_score(cls, value):
 
-    @field_validator("strengths", "weaknesses", "suggestions")
+        if not (0 <= value <= 100):
+            raise ValueError("Score must be between 0 and 100.")
+
+        return value
+
+    @field_validator(
+        "matched_skills",
+        "missing_skills",
+        "strengths",
+        "weaknesses",
+        "grammar_issues",
+        "formatting_feedback",
+        "experience_feedback",
+        "education_feedback",
+        "projects_feedback",
+        "keyword_recommendations",
+        "suggestions"
+    )
     @classmethod
-    def not_empty_list_of_strings(cls, v):
-        if not isinstance(v, list) or any(not isinstance(item, str) for item in v):
-            raise ValueError("must be a list of strings")
-        return v
+    def validate_string_list(cls, value):
+
+        if not isinstance(value, list):
+            raise ValueError("Value must be a list.")
+
+        for item in value:
+            if not isinstance(item, str):
+                raise ValueError("All list items must be strings.")
+
+        return value
+
+    @field_validator(
+        "interview_readiness",
+        "summary"
+    )
+    @classmethod
+    def validate_string(cls, value):
+
+        if not isinstance(value, str):
+            raise ValueError("Value must be a string.")
+
+        return value
 
 
-def validate_gemini_response(raw_text: str):
+def validate_ollama_response(raw_text: str):
     """
-    Attempts to parse and validate Gemini's raw text response.
+    Validate Ollama JSON response.
 
-    Returns (True, ResumeAssessment) if valid.
-    Returns (False, error_message) if invalid or malformed.
+    Returns:
+        (True, ResumeAssessment)
+        or
+        (False, error_message)
     """
-    # Gemini sometimes wraps JSON in markdown code fences; strip those first.
+
     cleaned = raw_text.strip()
+
     if cleaned.startswith("```"):
-        cleaned = cleaned.strip("`")
-        if cleaned.lower().startswith("json"):
-            cleaned = cleaned[4:].strip()
+
+        cleaned = cleaned.replace("```json", "")
+        cleaned = cleaned.replace("```", "")
+        cleaned = cleaned.strip()
 
     try:
+
         data = json.loads(cleaned)
+
     except json.JSONDecodeError as e:
-        return False, f"Response was not valid JSON: {e}"
+
+        return False, f"Invalid JSON: {e}"
 
     try:
+
         assessment = ResumeAssessment(**data)
+
         return True, assessment
+
     except ValidationError as e:
-        return False, f"Response did not match expected schema: {e}"
+
+        return False, f"Schema validation failed:\n{e}"
 
 
 if __name__ == "__main__":
-    # Quick manual tests
 
-    # TC-06 case 1: valid JSON matching schema
+    print("=" * 60)
+    print("AI Resume Screener Response Validator")
+    print("=" * 60)
+
+    # ---------------------------------------------------------
+    # Test Case 1
+    # ---------------------------------------------------------
+
     valid_example = """
     {
-        "overall_score": 8,
-        "score_rationale": "Strong metrics and clear progression.",
-        "strengths": ["Quantified achievements", "Clear career growth"],
-        "weaknesses": ["Missing contact info"],
-        "suggestions": ["Add a professional summary"],
-        "limitations": ""
+        "overall_score": 86,
+        "ats_score": 82,
+        "matched_skills": ["Python", "FastAPI"],
+        "missing_skills": ["Docker"],
+
+        "strengths": [
+            "Strong backend development experience",
+            "Good project portfolio"
+        ],
+
+        "weaknesses": [
+            "Resume lacks measurable achievements"
+        ],
+
+        "grammar_issues": [],
+
+        "formatting_feedback": [
+            "Improve spacing"
+        ],
+
+        "experience_feedback": [
+            "Include internship responsibilities"
+        ],
+
+        "education_feedback": [
+            "Mention CGPA"
+        ],
+
+        "projects_feedback": [
+            "Add deployment links"
+        ],
+
+        "keyword_recommendations": [
+            "REST API",
+            "Microservices"
+        ],
+
+        "interview_readiness": "Ready",
+
+        "summary": "Strong resume with minor improvements needed.",
+
+        "suggestions": [
+            "Add quantified achievements",
+            "Include Docker projects"
+        ]
     }
     """
-    ok, result = validate_gemini_response(valid_example)
-    print("Valid JSON test ->", "PASSED" if ok else "FAILED", "-", result)
 
-    # TC-06 case 2: malformed JSON (missing closing brace)
-    malformed_example = """
+    ok, result = validate_ollama_response(valid_example)
+
+    print("\nTest Case 1 (Valid JSON)")
+    print("PASS" if ok else "FAIL")
+    print(result)
+
+    # ---------------------------------------------------------
+    # Test Case 2
+    # ---------------------------------------------------------
+
+    malformed_json = """
     {
-        "overall_score": 8,
-        "score_rationale": "Missing closing brace"
+        "overall_score":80,
+        "ats_score":75
     """
-    ok, result = validate_gemini_response(malformed_example)
-    print("Malformed JSON test ->", "PASSED (correctly rejected)" if not ok else "FAILED (incorrectly accepted)", "-", result)
 
-    # TC-06 case 3: valid JSON but wrong types (score out of range)
-    invalid_schema_example = """
+    ok, result = validate_ollama_response(malformed_json)
+
+    print("\nTest Case 2 (Malformed JSON)")
+    print("PASS" if not ok else "FAIL")
+    print(result)
+
+    # ---------------------------------------------------------
+    # Test Case 3
+    # ---------------------------------------------------------
+
+    invalid_score = """
     {
-        "overall_score": 55,
-        "score_rationale": "Score out of allowed range",
-        "strengths": ["A"],
-        "weaknesses": ["B"],
-        "suggestions": ["C"],
-        "limitations": ""
+        "overall_score":150,
+        "ats_score":80,
+
+        "matched_skills":[],
+        "missing_skills":[],
+
+        "strengths":[],
+        "weaknesses":[],
+
+        "grammar_issues":[],
+        "formatting_feedback":[],
+        "experience_feedback":[],
+        "education_feedback":[],
+        "projects_feedback":[],
+
+        "keyword_recommendations":[],
+
+        "interview_readiness":"Ready",
+
+        "summary":"",
+
+        "suggestions":[]
     }
     """
-    ok, result = validate_gemini_response(invalid_schema_example)
-    print("Out-of-range score test ->", "PASSED (correctly rejected)" if not ok else "FAILED (incorrectly accepted)", "-", result)
+
+    ok, result = validate_ollama_response(invalid_score)
+
+    print("\nTest Case 3 (Invalid Score)")
+    print("PASS" if not ok else "FAIL")
+    print(result)
+
+    # ---------------------------------------------------------
+    # Test Case 4
+    # ---------------------------------------------------------
+
+    missing_field = """
+    {
+        "overall_score":90,
+        "ats_score":80
+    }
+    """
+
+    ok, result = validate_ollama_response(missing_field)
+
+    print("\nTest Case 4 (Missing Fields)")
+    print("PASS" if not ok else "FAIL")
+    print(result)
+
+    print("\nValidation Tests Completed.")

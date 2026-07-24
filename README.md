@@ -34,6 +34,8 @@ This project was developed as part of the **AI & Generative AI Fellowship**.
 - 📈 Resume Improvement Suggestions
 - 🔒 Secure File Handling
 - 💻 Responsive User Interface
+- 🌓 Dark / Light Theme Toggle
+- 🌐 Full marketing site — Home, Features, About, Contact, Privacy, and Terms pages
 - 🧠 Local AI using Ollama (No Paid API Required)
 
 ---
@@ -50,7 +52,9 @@ This project was developed as part of the **AI & Generative AI Fellowship**.
 
 - HTML5
 - CSS3
-- JavaScript
+- JavaScript (vanilla)
+- GSAP + ScrollTrigger (via CDN, scroll animations) with an automatic fallback if it fails to load
+- Custom lightweight canvas particle background (no heavy 3D library)
 
 ## AI
 
@@ -78,38 +82,52 @@ AI-Resume-Screener-and-Feedback/
 │
 ├── backend/
 │   │
-│   ├── app/
-│   │   ├── config.py
-│   │   ├── routes/
-│   │   │   └── upload.py
-│   │   ├── services/
-│   │   │   ├── ats_service.py
-│   │   │   ├── extractor.py
-│   │   │   ├── ollama_service.py
-│   │   │   └── prompt_builder.py
-│   │   ├── utils/
-│   │   └── main.py
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── uploads/                     # scan files land here temporarily — gitignored
 │   │
-│   ├── uploads/
-│   └── requirements.txt
+│   └── app/
+│       ├── config.py
+│       ├── routes/
+│       │   └── upload.py
+│       ├── services/
+│       │   ├── ats_service.py
+│       │   ├── extractor.py
+│       │   ├── ollama_service.py
+│       │   └── prompt_builder.py
+│       └── utils/
+│           └── file_validator.py
 │
 ├── frontend/
 │   │
 │   ├── images/
-|   ├── static/
+│   ├── static/
 │   │   ├── css/
+│   │   │   └── styles.css
 │   │   ├── js/
+│   │   │   ├── theme.js
+│   │   │   ├── nav.js
+│   │   │   ├── site.js
+│   │   │   ├── upload.js
+│   │   │   └── results.js
 │   │   └── images/
 │   │
 │   └── templates/
+│       ├── index.html
 │       ├── upload.html
-|       ├── index.html
-│       └── result.html
+│       ├── result.html
+│       ├── about.html
+│       ├── features.html
+│       ├── contact.html
+│       ├── privacy.html
+│       └── terms.html
 │
 ├── README.md
 ├── LICENSE
 └── .gitignore
 ```
+
+> **Note:** `main.py` lives directly inside `backend/`, not inside `backend/app/`. It imports the app package with `from app.routes.upload import router as upload_router`, so it must sit one level above `app/`. Run the server from inside `backend/`.
 
 ---
 
@@ -131,7 +149,17 @@ cd AI-Resume-Screener-and-Feedback
 
 ---
 
-## 3. Create Virtual Environment
+## 3. Move into the backend folder
+
+`requirements.txt`, `main.py`, and the virtual environment all live here.
+
+```bash
+cd backend
+```
+
+---
+
+## 4. Create Virtual Environment
 
 ### Windows
 
@@ -156,7 +184,7 @@ source .venv/bin/activate
 
 ---
 
-## 4. Install Dependencies
+## 5. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -187,10 +215,10 @@ ollama list
 
 # ⚙ Configuration
 
-Update your `config.py` file:
+Update your `app/config.py` file (or set environment variables in `.env`):
 
 ```python
-OLLAMA_MODEL = "qwen2.5:1.5b" and "llama3.2:3b"
+OLLAMA_MODEL = "qwen2.5:1.5b"  # or "llama3.2:3b"
 OLLAMA_HOST = "http://localhost:11434"
 ```
 
@@ -198,7 +226,7 @@ OLLAMA_HOST = "http://localhost:11434"
 
 # ▶ Run the Application
 
-Start the FastAPI server:
+From inside the `backend/` folder (with your virtual environment activated):
 
 ```bash
 uvicorn main:app --reload
@@ -209,6 +237,23 @@ Open your browser:
 ```
 http://127.0.0.1:8000
 ```
+
+This now opens the **homepage** — click "Analyze Resume" (or go straight to `/upload.html`) to run a scan.
+
+---
+
+# 🌐 Site Pages
+
+| Route | Page |
+|-------|------|
+| `GET /` | Homepage — hero, features, how it works, FAQ |
+| `GET /upload.html` | Resume + Job Description upload form |
+| `GET /result.html` | Scan results dashboard |
+| `GET /features.html` | Full feature breakdown |
+| `GET /about.html` | Mission, architecture, tech stack, team |
+| `GET /contact.html` | Contact form (opens your email client) and links |
+| `GET /privacy.html` | Privacy Policy |
+| `GET /terms.html` | Terms of Use |
 
 ---
 
@@ -352,6 +397,7 @@ Development workflow:
 - Uploaded files are processed locally.
 - No external AI APIs are required.
 - Environment variables are stored in `.env`.
+- `backend/uploads/` is excluded via `.gitignore` — uploaded resumes and job descriptions are never committed to the repository.
 - Sensitive files are ignored using `.gitignore`.
 
 ---
@@ -376,19 +422,7 @@ AI-Resume-Screener-and-Feedback\frontend\images
 
 # 🎥 Demo
 
-Add your project demo video or GIF here.
-
-Example:
-
-```
-docs/demo.mp4
-```
-
-or
-
-```
 https://drive.google.com/file/d/11vlVGrLLoBXYGHbGN7NMvemoohbKAKIm/view?usp=drive_link
-```
 
 ---
 
@@ -418,7 +452,7 @@ https://github.com/RAYYAN-369
 
 **LinkedIn**
 
-https://www.linkedin.com/in/muhammad-rayyan-bhatti-145956285/
+https://www.linkedin.com/in/calipha-rayyan
 
 ---
 

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — AI Resume Scanner</title>
+<meta name="description" content="Get in touch about the AI Resume Scanner project." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/css/styles.css" />
+<noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a href="/" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      AI Resume Scanner
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="siteNav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="siteNav">
+      <a href="/">Home</a>
+      <a href="/features.html">Features</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/about.html">About</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/contact.html">Contact</a>
+      <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+      <span id="themeLabel">Dark</span>
+      <span class="track"><span class="knob"></span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Home</a> / Contact</div>
+    <p class="eyebrow reveal">Get in touch</p>
+    <h1 class="reveal">Questions, bug reports, or feedback on a scan</h1>
+    <p class="lede reveal">This is a fellowship project maintained on GitHub , the fastest way to reach the team is directly there.</p>
+  </div>
+</section>
+
+<main class="container" id="main-content">
+
+  <div class="contact-grid reveal">
+    <form class="contact-form" id="contactForm" novalidate>
+      <div class="form-field">
+        <label for="contactName">Name</label>
+        <input type="text" id="contactName" name="name" required autocomplete="name" />
+      </div>
+      <div class="form-field">
+        <label for="contactEmail">Email</label>
+        <input type="email" id="contactEmail" name="email" required autocomplete="email" />
+      </div>
+      <div class="form-field">
+        <label for="contactSubject">Subject</label>
+        <input type="text" id="contactSubject" name="subject" required />
+      </div>
+      <div class="form-field">
+        <label for="contactMessage">Message</label>
+        <textarea id="contactMessage" name="message" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" id="contactSubmit">
+        <span class="btn-label">Send message</span>
+      </button>
+      <p class="form-note">This opens your email client with the message pre-filled — nothing is sent through this website, since there's no contact backend behind it.</p>
+      <p class="form-error" id="contactError" role="alert"></p>
+    </form>
+
+    <aside class="contact-info-card">
+      <h3>Other ways to reach the team</h3>
+
+      <div class="contact-info-row">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.5 2h7A1.5 1.5 0 0115 3.5v13a1.5 1.5 0 01-1.5 1.5h-7A1.5 1.5 0 015 16.5v-13A1.5 1.5 0 016.5 2z"/></svg>
+        <div>
+          <div class="ci-label">GitHub</div>
+          <a href="https://github.com/RAYYAN-369" target="_blank" rel="noopener">github.com/RAYYAN-369</a>
+        </div>
+      </div>
+
+      <div class="contact-info-row">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 9v5M7 6.5v.01M10.5 14V9M10.5 11c0-1.1.9-2 2-2s2 .9 2 2v3" stroke-linecap="round"/></svg>
+        <div>
+          <div class="ci-label">LinkedIn</div>
+          <a href="https://www.linkedin.com/in/muhammad-rayyan-bhatti-145956285/" target="_blank" rel="noopener">Muhammad Rayyan Bhatti</a>
+        </div>
+      </div>
+
+      <div class="contact-info-row">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6l7-3 7 3v4c0 4-3 6.5-7 7-4-.5-7-3-7-7V6z" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div>
+          <div class="ci-label">Bug reports &amp; feature requests</div>
+          <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback/issues" target="_blank" rel="noopener">Open a GitHub issue</a>
+        </div>
+      </div>
+
+      <div class="contact-info-row">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2" stroke-linecap="round"/></svg>
+        <div>
+          <div class="ci-label">Response time</div>
+          <span style="color: var(--ink-soft); font-size: 0.85rem;">Best-effort — this is a student fellowship project, not a staffed support line.</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>AI Resume Scanner</h4>
+        <p>AI-assisted resume and job description matching, built for the AI / GenAI Fellowship Program.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="/#features">Features</a>
+        <a href="/#how-it-works">How it works</a>
+        <a href="/upload.html">Analyze resume</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback#readme" target="_blank" rel="noopener">Documentation</a>
+        <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback" target="_blank" rel="noopener">GitHub</a>
+        <a href="/#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AI Resume Scanner — v0.1.0 (MVP)</span>
+      <span>AI / GenAI Fellowship Program</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/js/theme.js"></script>
+<script src="/static/js/nav.js"></script>
+<script src="/static/js/site.js"></script>
+<script>
+  // Contact form: builds a mailto: link client-side. There's no backend
+  // endpoint for contact submissions, so this is the honest option —
+  // it hands the message to the visitor's own email client rather than
+  // pretending to send it somewhere.
+  (function () {
+    const form = document.getElementById("contactForm");
+    const errorEl = document.getElementById("contactError");
+    if (!form) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      errorEl.textContent = "";
+
+      const name = document.getElementById("contactName").value.trim();
+      const email = document.getElementById("contactEmail").value.trim();
+      const subject = document.getElementById("contactSubject").value.trim();
+      const message = document.getElementById("contactMessage").value.trim();
+
+      if (!name || !email || !subject || !message) {
+        errorEl.textContent = "Please fill in every field before sending.";
+        return;
+      }
+
+      const body = `From: ${name} (${email})\n\n${message}`;
+      const mailto =
+        "mailto:?subject=" +
+        encodeURIComponent(subject) +
+        "&body=" +
+        encodeURIComponent(body);
+
+      window.location.href = mailto;
+    });
+  })();
+</script>
+</body>
+</html>

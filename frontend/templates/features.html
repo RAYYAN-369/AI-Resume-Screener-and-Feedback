@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Features — AI Resume Scanner</title>
+<meta name="description" content="Every check the AI Resume Scanner runs: ATS scoring, skill-gap detection, grammar and formatting review, and interview readiness." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/css/styles.css" />
+<noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a href="/" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      AI Resume Scanner
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="siteNav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="siteNav">
+      <a href="/">Home</a>
+      <a href="/features.html">Features</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/about.html">About</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/contact.html">Contact</a>
+      <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+      <span id="themeLabel">Dark</span>
+      <span class="track"><span class="knob"></span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Home</a> / Features</div>
+    <p class="eyebrow reveal">Everything one scan produces</p>
+    <h1 class="reveal">One upload, fifteen feedback signals.</h1>
+    <p class="lede reveal">
+      Every scan runs the same pipeline against your resume and the job description 
+      grouped below by what each check is actually for.
+    </p>
+  </div>
+</section>
+
+<main class="container" id="main-content">
+
+  <section class="feature-group reveal">
+    <h2>Matching &amp; scoring</h2>
+    <p>How closely the resume lines up with the job description, in numbers.</p>
+    <div class="feature-grid" style="margin-top: 18px;">
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2" stroke-linecap="round"/></svg></div>
+        <h3>ATS score</h3>
+        <p>Keyword-matching score built from a curated technical skills list, the same style of check an automated screener runs.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 2l7 3v5c0 4.5-3 7.5-7 8-4-.5-7-3.5-7-8V5l7-3z"/></svg></div>
+        <h3>Overall resume score</h3>
+        <p>The model's holistic read on resume quality and clarity, evidence, and presentation, not just keywords.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 10.5l4 4 8-9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Matched skills</h3>
+        <p>The exact technical and soft skills the resume already demonstrates that the job description also asks for.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 10h12M4 6h8M4 14h8" stroke-linecap="round"/></svg></div>
+        <h3>Missing skills</h3>
+        <p>Requirements the job description names that the resume doesn't currently show evidence of.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h12v12H4z"/><path d="M7 8h6M7 11h6" stroke-linecap="round"/></svg></div>
+        <h3>Keyword recommendations</h3>
+        <p>ATS-relevant terms worth adding to the resume, drawn from language the posting actually uses.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-group reveal">
+    <h2>Resume content feedback</h2>
+    <p>Section-by-section notes on what's written, not just what's missing.</p>
+    <div class="feature-grid" style="margin-top: 18px;">
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="2" width="12" height="16" rx="1.5"/><path d="M7 6h6M7 9h6M7 12h3" stroke-linecap="round"/></svg></div>
+        <h3>Grammar review</h3>
+        <p>Wording and grammar issues flagged directly in the resume text.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h12v12H4z" opacity="0"/><path d="M3 10a7 7 0 1114 0 7 7 0 01-14 0z" fill="none" stroke-width="1.6"/></svg></div>
+        <h3>Formatting feedback</h3>
+        <p>Consistency and readability notes — spacing, headings, bullet structure  the kind of thing parsers trip on.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6l7-3 7 3v4c0 4-3 6.5-7 7-4-.5-7-3-7-7V6z" stroke-linejoin="round"/></svg></div>
+        <h3>Experience feedback</h3>
+        <p>Suggestions for strengthening how work experience is described and evidenced.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="9" width="12" height="8" rx="2"/><path d="M7 9V6a3 3 0 016 0v3" stroke-linecap="round"/></svg></div>
+        <h3>Education feedback</h3>
+        <p>What's missing or underdeveloped in the education section  CGPA, coursework, honors.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 10h12M4 6h8M4 14h8" stroke-linecap="round"/></svg></div>
+        <h3>Projects feedback</h3>
+        <p>Notes on making project entries read as evidence , outcomes and links, not just titles.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 2l2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 7.2l5-.7L10 2z"/></svg></div>
+        <h3>Strengths &amp; weaknesses</h3>
+        <p>A direct list of what's working in the resume and what's holding it back.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-group reveal">
+    <h2>Guidance &amp; next steps</h2>
+    <p>Where the scan turns into something actionable.</p>
+    <div class="feature-grid" style="margin-top: 18px;">
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 15l3-3 3 2 3-5 3 2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17h14" stroke-linecap="round"/></svg></div>
+        <h3>AI summary</h3>
+        <p>An 80–120 word professional summary tying the score, strengths, and weaknesses together.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h12v12H4z"/><path d="M7 8h6M7 11h6" stroke-linecap="round"/></svg></div>
+        <h3>Interview readiness</h3>
+        <p>A direct read on whether the candidate looks interview-ready based on what's evidenced.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V4M12 4l-4 4M12 4l4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Improvement suggestions</h3>
+        <p>At least eight concrete, resume-specific suggestions  not generic career advice.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-group reveal">
+    <h2>Trust &amp; privacy</h2>
+    <p>What happens to your files, in plain terms.</p>
+    <div class="feature-grid" style="margin-top: 18px;">
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="9" width="12" height="8" rx="2"/><path d="M7 9V6a3 3 0 016 0v3" stroke-linecap="round"/></svg></div>
+        <h3>Local AI, no paid API</h3>
+        <p>Analysis runs through Ollama on the machine hosting the app , no external AI service call.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6l7-3 7 3v4c0 4-3 6.5-7 7-4-.5-7-3-7-7V6z" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Secure file handling</h3>
+        <p>Only PDF and DOCX are accepted; files are used for the scan you run.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2" stroke-linecap="round"/></svg></div>
+        <h3>Structured, validated output</h3>
+        <p>Every response is checked against a schema before it reaches the results page  no partial or malformed data shown.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band reveal">
+    <h2>Try it on your own resume</h2>
+    <p>See the ATS score, skill gaps, and feedback for a real resume and job posting.</p>
+    <div class="actions-row">
+      <a href="/upload.html" class="btn btn-primary">Analyze Resume</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>AI Resume Scanner</h4>
+        <p>AI-assisted resume and job description matching, built for the AI / GenAI Fellowship Program.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="/#features">Features</a>
+        <a href="/#how-it-works">How it works</a>
+        <a href="/upload.html">Analyze resume</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback#readme" target="_blank" rel="noopener">Documentation</a>
+        <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback" target="_blank" rel="noopener">GitHub</a>
+        <a href="/#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AI Resume Scanner — v0.1.0 (MVP)</span>
+      <span>AI / GenAI Fellowship Program</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/js/theme.js"></script>
+<script src="/static/js/nav.js"></script>
+<script src="/static/js/site.js"></script>
+</body>
+</html>

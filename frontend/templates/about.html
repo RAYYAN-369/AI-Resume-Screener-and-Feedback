@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — AI Resume Scanner</title>
+<meta name="description" content="Why the AI Resume Scanner exists, how it's built, and the team behind it — an AI / GenAI Fellowship Program project." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/css/styles.css" />
+<noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a href="/" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      AI Resume Scanner
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="siteNav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="siteNav">
+      <a href="/">Home</a>
+      <a href="/features.html">Features</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/about.html">About</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/contact.html">Contact</a>
+      <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+      <span id="themeLabel">Dark</span>
+      <span class="track"><span class="knob"></span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Home</a> / About</div>
+    <p class="eyebrow reveal">About this project</p>
+    <h1 class="reveal">Built to make ATS feedback available before you apply, not after you get silence.</h1>
+    <p class="lede reveal">
+      AI Resume Scanner is a resume ↔ job description matcher built for the AI / GenAI Fellowship
+      Program. It runs entirely on locally hosted infrastructure , no paid AI API, no resume data
+      leaving the machine it's running on.
+    </p>
+  </div>
+</section>
+
+<main class="container" id="main-content">
+
+  <section class="section-heading reveal">
+    <h2>Mission &amp; vision</h2>
+    <p style="max-width: 68ch; color: var(--ink-soft);">
+      Most applicant tracking systems reject resumes on keyword and formatting mismatches long
+      before a human reads them, and candidates rarely find out why. Our mission is to surface
+      that feedback earlier: an evidenced match score, the specific skills a posting expects that
+      a resume doesn't show, and concrete, section-by-section suggestions , so the decision to
+      apply, and how to present the application, is an informed one.
+    </p>
+    <p style="max-width: 68ch; color: var(--ink-soft); margin-top: 12px;">
+      The longer-term vision is a scanner that's honest about its limits: it's guidance from a
+      language model reading two documents, not a hiring decision, and the interface says so
+      throughout.
+    </p>
+  </section>
+
+  <section class="section-heading reveal" style="margin-top: 48px;">
+    <h2>System architecture</h2>
+    <p>Five components, each doing one job, chained into a single <code>/upload</code> request.</p>
+  </section>
+
+  <div class="architecture-grid reveal">
+    <div class="arch-card">
+      <h4>FastAPI</h4>
+      <p>Serves the site and exposes the <code>/upload</code> endpoint that the whole scan runs through.</p>
+    </div>
+    <div class="arch-card">
+      <h4>Resume &amp; JD extraction</h4>
+      <p>PyPDF and python-docx turn uploaded PDFs and DOCX files into plain text.</p>
+    </div>
+    <div class="arch-card">
+      <h4>ATS engine</h4>
+      <p>Normalizes and compares resume and job-description text against a curated skills list to compute a match score.</p>
+    </div>
+    <div class="arch-card">
+      <h4>Prompt builder</h4>
+      <p>Assembles a strict, schema-constrained prompt so the model returns predictable, parseable JSON.</p>
+    </div>
+    <div class="arch-card">
+      <h4>Ollama</h4>
+      <p>Runs the language model locally  llama3.2:3b by default  and returns the structured assessment.</p>
+    </div>
+    <div class="arch-card">
+      <h4>JSON validation</h4>
+      <p>A Pydantic schema checks every field and score range before anything reaches the frontend.</p>
+    </div>
+  </div>
+
+  <section class="section-heading reveal" style="margin-top: 48px;">
+    <h2>Tech stack</h2>
+  </section>
+
+  <div class="reveal">
+    <p style="color: var(--ink-soft); margin-bottom: 4px;">Backend</p>
+    <div class="tech-badge-row">
+      <span class="tech-badge">Python</span>
+      <span class="tech-badge">FastAPI</span>
+      <span class="tech-badge">Uvicorn</span>
+      <span class="tech-badge">Pydantic</span>
+    </div>
+    <p style="color: var(--ink-soft); margin: 16px 0 4px;">Frontend</p>
+    <div class="tech-badge-row">
+      <span class="tech-badge">HTML5</span>
+      <span class="tech-badge">CSS3</span>
+      <span class="tech-badge">Vanilla JavaScript</span>
+    </div>
+    <p style="color: var(--ink-soft); margin: 16px 0 4px;">AI &amp; documents</p>
+    <div class="tech-badge-row">
+      <span class="tech-badge">Ollama</span>
+      <span class="tech-badge">llama3.2:3b</span>
+      <span class="tech-badge">qwen2.5:1.5b</span>
+      <span class="tech-badge">PyPDF</span>
+      <span class="tech-badge">python-docx</span>
+    </div>
+  </div>
+
+  <section class="section-heading reveal" style="margin-top: 48px;">
+    <h2>Team</h2>
+    <p>Built by a four-person team for the AI / GenAI Fellowship Program.</p>
+  </section>
+
+  <div class="team-grid reveal">
+    <div class="team-card">
+      <div class="team-avatar" aria-hidden="true">MR</div>
+      <h4>Muhammad Rayyan Bhatti</h4>
+      <p>Team Leader &amp; Full Stack Developer</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" aria-hidden="true">AM</div>
+      <h4>Asfaar Maham Ghazi</h4>
+      <p>Frontend Developer</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" aria-hidden="true">ZA</div>
+      <h4>Zain Ali Haider</h4>
+      <p>Backend Developer</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" aria-hidden="true">HH</div>
+      <h4>Huzaifa Haider Khan</h4>
+      <p>AI &amp; Documentation</p>
+    </div>
+  </div>
+
+  <section class="cta-band reveal">
+    <h2>Curious how it scores your resume?</h2>
+    <p>Run a scan and see the match score, skill gaps, and feedback for yourself.</p>
+    <div class="actions-row">
+      <a href="/upload.html" class="btn btn-primary">Analyze Resume</a>
+      <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback" class="btn btn-ghost" target="_blank" rel="noopener">View source on GitHub</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>AI Resume Scanner</h4>
+        <p>AI-assisted resume and job description matching, built for the AI / GenAI Fellowship Program.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="/#features">Features</a>
+        <a href="/#how-it-works">How it works</a>
+        <a href="/upload.html">Analyze resume</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback#readme" target="_blank" rel="noopener">Documentation</a>
+        <a href="https://github.com/RAYYAN-369/AI-Resume-Screener-and-Feedback" target="_blank" rel="noopener">GitHub</a>
+        <a href="/#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AI Resume Scanner — v0.1.0 (MVP)</span>
+      <span>AI / GenAI Fellowship Program</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/js/theme.js"></script>
+<script src="/static/js/nav.js"></script>
+<script src="/static/js/site.js"></script>
+</body>
+</html>
